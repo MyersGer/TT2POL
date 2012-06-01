@@ -1,0 +1,90 @@
+\documentclass[10pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage[ngerman]{babel}
+\usepackage[automark]{scrpage2}
+\usepackage{amsmath,amssymb,amstext}
+%\usepackage{mathtools}
+\usepackage[]{color}
+\usepackage[]{enumerate}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage[perpage,para,symbol*]{footmisc}
+\usepackage{listings} 
+\usepackage[pdfborder={0 0 0},colorlinks=false]{hyperref}
+\usepackage[numbers,square]{natbib}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage[absolute]{textpos}
+\usepackage{float}
+\usepackage[colorinlistoftodos,textsize=small,textwidth=2cm,shadow,bordercolor=black,backgroundcolor={red!100!green!33},linecolor=black]{todonotes}
+
+\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, breaklines=true, showstringspaces=false} 
+\restylefloat{figure}
+
+%changehere
+\def\titletext{Bericht TT2P 1}
+\def\titletextshort{Praktikum 1}
+\author{Steffen Brauer, André Harms,\\ Florian Johannßen, Jan Meier,\\ Florian Ocker, Olaf Potratz,\\ Torben Woggan}
+
+\title{\titletext}
+
+%changehere Datum der Übung
+\date{10.06.2012}
+
+\pagestyle{scrheadings}
+%changehere
+\ihead{TT2, Neitzke}
+\ifoot{Generiert am:\\ \today}
+
+\cfoot{Steffen Brauer, André Harms,\\ Florian Johannßen, Jan Meier,\\ Florian Ocker, Olaf Potratz,\\ Torben Woggan}
+
+
+\ohead[]{\titletextshort}
+\ofoot[]{{\thepage} / \pageref{LastPage}}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+
+\begin{document}
+\maketitle
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+%	\listoftables                                 												% 
+	\listoffigures  
+	\lstlistoflistings	
+
+\section{Grundlagen}
+Verstärkendes Lernen oder Bestärkendes Lernen (engl. Reinforcement Learning), ist der Überbegriff für eine Reihe von Methoden zum Maschinellen Lernen (engl. Machine Learning). Beim Verstärkenden Lernen gibt es keine Vorgabe von Trainingsbeispielen, der Agent kann nur aus den eigenen Erfahrungen lernen. Ein Agent befindet sich immer in einer Umwelt, über die er Informationen besitzen muss. Ein real existierender Agent (im Gegensatz zu einem Agenten, der nur in einer Simulation virtuell vorhanden ist) nimmt Informationen über die Umwelt mit Sensoren wahr. Auf die Informationen kann er mit Aktionen reagieren, z.B. ein mechanisches Teil bewegen. Das Handeln des Agenten besteht somit aus einer Folge von Aktionen. Das Ziel des Verstärkenden Lernens ist nun, dass der Agent selbständig erkennen kann, welche Aktion die günstigste ist. Dies muss er lernen können. Dieser Lernprozess basiert auf positiven Belohnungen und negativen Belohnungen (Kosten). Höhere Belohnungen werden vom Agenten bevorzugt. Der Agent lernt, wie die Aktionen belohnt werden, somit kann er in Zukunft bessere Entscheidungen treffen (Verstärkung). Die Verstärkung kann auch erst zu spät einsetzen (z.B. nach Ende eines Spiels), so dass das gelernte Wissen erst später eine Rolle spielt (z.B. beim nächsten Spiel).
+
+Konkret wird vom Zeitpunkt $t$, dem Zustand $s_t$, der Aktion $a_t$ und der Belohnung (Reward) $r_t$ zum Zeitpunkt $t$ gesprochen. Der Agent wählt zum Zeitpunkt $t$ eine Aktion $a_t$ und gelangt dadurch von Zustand $s_t$ in Zustand $s_{t+1}$ und erhält daraufhin eine Belohnung $r_{t+1}$. Im Zustand $s_{t+1}$ wählt er nun wiederum eine Aktion $a_{t+1}$.
+
+Die Belohnungen und der Folgezustand werden dabei als Teil des Modells der Umgebung angesehen. Allerdings ist die Umgebung im Allgemeinen nicht-deterministisch. Das Ausführen einer bestimmten Aktion in einem bestimmten Zustand muss somit nicht immer im gleichen Folgezustand resultieren. Der Übergang in die Folgezustände basiert aber immer auf den gleichen Wahrscheinlichkeiten, die sich im Laufe der Zeit auch nicht verändern, man sagt die Umgebung ist stationär.
+
+\section{Dynamische Programmierung}
+
+Dynamische Programmierung ist eine Methode zum algorithmischen Lösen von Optimierungsproblemen. Dynamische Programmierung kann erfolgreich eingesetzt werden, wenn das Problem aus mehreren gleichartigen Teilproblemen besteht. Dabei muss sich eine optimale Lösung des Problems aus optimalen Lösungen der Teilprobleme zusammensetzen. Zuerst werden die optimalen Lösungen der kleinsten Teilprobleme berechnet. Diese werden dann geeignet zu einer Lösung eines nächstgrößeren Teilproblems zusammenzusetzen. Diese Schritte werden wiederholt. Einmal berechnete Teilergebnisse werden gespeichert, um bei nachfolgenden Berechnungen gleichartiger Teilprobleme auf diese Zwischenlösungen zurück greifen zu können, anstatt eine neue Berechnung anstellen zu müssen. 
+
+Die Voraussetzung, um dynamische Programmierung anwenden zu können ist ein vollständiges Modell. Dies bedeutet, dass alle Zustände inklusive ihrer Rewards und Folgezustände in Abhängigkeit von Ausgangszustand und einer Aktion bekannt sind.
+
+Zustände bekannt
+Belohnungen für alle Zustände bekannt
+Folgezustände in Abhängigkeit von Ausgangszustand und Aktion
+bekannt
+
+\subsection{Policy Evaluation}
+\subsection{Policy Improvement}
+\subsection{Policy Iteration}
+\subsection{Value Iteration}
+
+
+\section{Temporal Difference Learning}
+
+\section{Fazit}
+
+\end{document}
+
