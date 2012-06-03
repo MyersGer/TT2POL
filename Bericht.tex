@@ -75,13 +75,17 @@ Somit sind $\mathcal{P}^{a}_{ss'}$ und $\mathcal{R}^{a}_{ss'}$ bekannt und müss
 \subsection{Policy Evaluation}
 Policy Evaluation beschreibt die Berechnung von Zustandswerten bezüglich einer gegebenen Strategie (Policy) entsprechend der Bellman-Gleichung. Es werden für eine gegebene Strategie $\pi$ die zugehörigen Wertefunktionen $V^{\pi}$ berechnet. Dabei werden episodische Probleme betrachtet, so dass ein künstlicher Endzustand $S_{final}$  und ein erweiterter Zustandsraum $S^+=S\cup{S_{final}}$ ($S$ mit $S_{final}$) definiert werden kann. Das Ergebnis wird iterativ ermittelt (bzw. approximiert). Hierzu wird eine aufeinander aufbauende Wertereihenfolge $V_0, V_1 ... V_n$ generiert; $V_0$ kann dabei beliebig gewählt werden. Durch Iteration der Bellman-Gleichung lassen sich die Folgeglieder berechnen:
 
-\begin{align}
+\begin{align*}
 V^\pi_{k+1}(s) = \sum\limits_{a} \pi(s,a) \sum\limits_{s'}\mathcal{P}^a_{ss'}[\mathcal{R}^a_{ss'}+\gamma V^\pi_k(s')]
-\end{align}
+\end{align*}
 
 Dies geschieht für alle Zustände in $S^+$. Durch ausreichend langes Iterieren tastet man sich beliebig nahe an die echte Wertfunktion heran. Um die Iteration zu stoppen, benötigt man ein Abbruchkriterium. Hierfür kann der Term 
 
-verwendet werden, den man gegen einen Schwellwert prüft und abbricht, wenn dieser unterschritten wird.
+\begin{align*}
+\max\limits_{s\in S^+} |V_{k+1}(s)-V_k(s)|
+\end{align*}
+
+verwendet werden, den man gegen einen Schwellwert prüft und abbricht, wenn dieser unterschritten wird. Man nimmt hier also immer den größten Differenz-Wert zwischen zwei Schritten und prüft ihn auf Überschreiten des Schwellwertes.
 
 
 \subsection{Policy Improvement}
