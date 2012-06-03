@@ -67,16 +67,23 @@ Die Belohnungen und der Folgezustand werden dabei als Teil des Modells der Umgeb
 
 \section{Dynamische Programmierung}
 
-Dynamische Programmierung ist eine Methode zum algorithmischen Lösen von Optimierungsproblemen. Dynamische Programmierung kann erfolgreich eingesetzt werden, wenn das Problem aus mehreren gleichartigen Teilproblemen besteht. Dabei muss sich eine optimale Lösung des Problems aus optimalen Lösungen der Teilprobleme zusammensetzen. Zuerst werden die optimalen Lösungen der kleinsten Teilprobleme berechnet. Diese werden dann geeignet zu einer Lösung eines nächstgrößeren Teilproblems zusammenzusetzen. Diese Schritte werden wiederholt. Einmal berechnete Teilergebnisse werden gespeichert, um bei nachfolgenden Berechnungen gleichartiger Teilprobleme auf diese Zwischenlösungen zurück greifen zu können, anstatt eine neue Berechnung anstellen zu müssen. 
+Dynamische Programmierung ist eine Methode zum algorithmischen Lösen von Optimierungsproblemen und kann als Spezialfall von Reinforcement Learning angesehen werden. Dynamische Programmierung kann erfolgreich eingesetzt werden, wenn das Problem aus mehreren gleichartigen Teilproblemen besteht. Dabei muss sich eine optimale Lösung des Problems aus optimalen Lösungen der Teilprobleme zusammensetzen. Zuerst werden die optimalen Lösungen der kleinsten Teilprobleme berechnet. Diese werden dann geeignet zu einer Lösung eines nächstgrößeren Teilproblems zusammenzusetzen. Diese Schritte werden wiederholt. Einmal berechnete Teilergebnisse werden gespeichert, um bei nachfolgenden Berechnungen gleichartiger Teilprobleme auf diese Zwischenlösungen zurück greifen zu können, anstatt eine neue Berechnung anstellen zu müssen. 
 
 Die Voraussetzung, um dynamische Programmierung anwenden zu können ist ein vollständiges Modell. Dies bedeutet, dass alle Zustände inklusive ihrer Rewards und Folgezustände in Abhängigkeit von Ausgangszustand und einer Aktion bekannt sind.
-
-Zustände bekannt
-Belohnungen für alle Zustände bekannt
-Folgezustände in Abhängigkeit von Ausgangszustand und Aktion
-bekannt
+Somit sind $\mathcal{P}^{a}_{ss'}$ und $\mathcal{R}^{a}_{ss'}$ bekannt und müssen nicht erst durch Erfahrungen geschätzt werden.
 
 \subsection{Policy Evaluation}
+Policy Evaluation beschreibt die Berechnung von Zustandswerten bezüglich einer gegebenen Strategie (Policy) entsprechend der Bellman-Gleichung. Es werden für eine gegebene Strategie $\pi$ die zugehörigen Wertefunktionen $V^{\pi}$ berechnet. Dabei werden episodische Probleme betrachtet, so dass ein künstlicher Endzustand $S_{final}$  und ein erweiterter Zustandsraum $S^+=S\cup{S_{final}}$ ($S$ mit $S_{final}$) definiert werden kann. Das Ergebnis wird iterativ ermittelt (bzw. approximiert). Hierzu wird eine aufeinander aufbauende Wertereihenfolge $V_0, V_1 ... V_n$ generiert; $V_0$ kann dabei beliebig gewählt werden. Durch Iteration der Bellman-Gleichung lassen sich die Folgeglieder berechnen:
+
+\begin{align}
+V^\pi_{k+1}(s) = \sum\limits_{a} \pi(s,a) \sum\limits_{s'}\mathcal{P}^a_{ss'}[\mathcal{R}^a_{ss'}+\gamma V^\pi_k(s')]
+\end{align}
+
+Dies geschieht für alle Zustände in $S^+$. Durch ausreichend langes Iterieren tastet man sich beliebig nahe an die echte Wertfunktion heran. Um die Iteration zu stoppen, benötigt man ein Abbruchkriterium. Hierfür kann der Term 
+
+verwendet werden, den man gegen einen Schwellwert prüft und abbricht, wenn dieser unterschritten wird.
+
+
 \subsection{Policy Improvement}
 \subsection{Policy Iteration}
 \subsection{Value Iteration}
