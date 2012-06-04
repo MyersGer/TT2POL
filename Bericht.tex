@@ -90,7 +90,19 @@ verwendet werden, den man gegen einen Schwellwert prüft und abbricht, wenn dies
 
 \subsection{Policy Improvement}
 Grund für das Ermitteln einer Wertfunktion, ist das Bestreben eine bessere Strategie finden zu wollen. Wenn $V^\pi$ eine beliebige Wertfunktion für die  Strategie $\pi$ ist,  ist es interessant, ob für einen Zustand $s$ eine andere Aktion $a\neq\pi(s)$   gewählt werden soll, oder aber die alte Aktion $a=\pi(s)$ beibehalten werden soll.
-Es gibt verschiedene Möglichkeiten, diese  Entscheidung zu treffen. Eine ist, irgendeine Aktion $a$ zu wählen und dann mit der bestehenden Strategie $\pi$ fortzufahren.
+Es gibt verschiedene Möglichkeiten, diese  Entscheidung zu treffen. Eine ist, irgendeine Aktion $a$ zu wählen und dann mit der bestehenden Strategie $\pi$ fortzufahren. Der Wert durch Ausführen dieses $a$s ist durch $Q^\pi(s,a)$ beschrieben. Die Frage, die sich stellt, ist: Ist $Q^\pi(s,a)$ besser als $V^\pi(s)$?.
+Ist dies der Fall, sollte die ermittelte Aktion $a$ der bestehenden Strategie vorgezogen werden.
+
+Seien $\pi$ und $\pi'$ ein beliebiges Paar von Strategien, so dass für alle $s \in S$ gilt:
+\begin{align*}
+Q^\pi(s,\pi'(s)) \ge V^\pi(s)
+\end{align*}
+
+Dann ist Strategie $\pi'$  mindestens so gut wie $\pi$, was wiederum bedeutet:
+
+\begin{align*}
+V^{\pi'}(s) \ge V^\pi(s)
+\end{align*}
 
 \subsection{Policy Iteration}
 \subsection{Value Iteration}
