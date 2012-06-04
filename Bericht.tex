@@ -94,34 +94,35 @@ Es gibt verschiedene Möglichkeiten, diese  Entscheidung zu treffen. Eine ist, i
 
 \subsection{Policy Iteration}
 \subsection{Value Iteration}
-Bei einer Strategie $\pi : S \rightarrow A $ werden Zustände auf Aktionen abgebildet. Die Strategie ist optimal, sofern sie Belohnung $r$ maximiert. Die Abgeschwächte Belohnung einer Strategie $\pi$ wird durch folgende Gleichung dargestellt:
+Bei einer Strategie $\pi : S \rightarrow A $ werden Zustände auf Aktionen abgebildet. Die Strategie ist optimal, sofern sie Belohnung $r$ maximiert wird. Die abgeschwächte Belohnung einer Strategie $\pi$ kann durch folgende Gleichung berechnet werden:
 \begin{align}\label{gleichungvp}
 V^{\pi}(s_t) &= r_t + \gamma r_{t+1} + \gamma^2r_{t+2} + ... = \sum^{\infty}_{i=0} \gamma^ir_{t+1}
 \end{align}
-Die Variable $\gamma$ stellt eine Konstante darf, für die folgendes gilt: $0 \geq \gamma < 1$. Sie sorgt dafür das ein Feedback das weiter in der Zukunft liegt abgeschwächt wird. Hierdurch wird die direkte Belohnung $r_t$ am stärksten gewichtet.
+Die Variable $\gamma$ stellt eine Konstante dar dessen Wert zwischen null und eins angesiedelt ist: $0 \geq \gamma < 1$. Die Variable sorgt dafür, das ein weiter in der Zukunft liegendes Feedback abgeschwächt wird. Hierdurch wird die direkte Belohnung $r_t$ am stärksten gewichtet.
 
-Eine Strategie ist optimal, sofern sie ebenso gut wie alle anderen Strategien oder besser als diese ist. Bezeichnet wird diese mit $\pi^*$ und mathematisch folgendermaßen ausgedrückt:
+Eine Strategie ist optimal, sofern sie ebenso gut oder besser als anderen Strategien ist. 
+Mathematisch kann dies folgendermaßen ausgedrückt werden, hierbei stellt $\pi^*$ die optimale Strategie dar:
 \begin{align}\label{voptimal}
 V^{\pi*}(s)\geq V^\pi(s)
 \end{align}
 Im Folgendem wird $V^{\pi*}$ mit $V^*$ bezeichnet.
 
-Basierend auf dem Bellman-Prinzipg ist es möglich durch Optimierung einzelner Aktionen eine optimale Strategie zu finden. Gesucht ist eine optimale Strategie, die die Gleichungen \ref{gleichungvp} und \ref{voptimal} erfüllt. Hierfür kann folgende Gleichung aufgestellt werden:
+Basierend auf dem Bellman-Prinzipg ist es möglich durch Optimierung einzelner Aktionen eine optimale Strategie zu finden. Gesucht ist eine optimale Strategie, die die Gleichungen \ref{gleichungvp} und \ref{voptimal} erfüllt. Somit kann folgende Gleichung aufgestellt werden:
 \begin{align}
 V^*(s_t) &= \underset{a_t,a_{t+1}, a_{t+2},...}{max}(r_t(s_t,a_t) + \gamma r_t(s_{t+1},a_{t+1}) + \gamma r_t(s_{t+2},a_{t+2}) + ...)
 \end{align}
-Da die direkte Belohnung $r(s_t, a_t)$ nicht von den Nachfolgezuständen und Belohnung abhängt sondern nur  von $s_t$ und $a_t$ kann die Maximierung aufgeteilt werden. Somt ergeben sich folgende Gleichungen:
+Da die direkte Belohnung $r(s_t, a_t)$ nicht von den Nachfolgezuständen und Belohnungen abhängt sondern nur  von $s_t$ und $a_t$ kann die Maximierung aufgeteilt werden. Wodurch sich folgende Gleichungen ergeben:
 \begin{align}
 V^*(s_t) &= \underset{a_t,a_{t+1}, a_{t+2},...}{max}[r(s_t, a_t) + \gamma \underset{a_{t+1},a_{t+2},...}{max}(r_t(s_{t+1},a_{t+1}) + \gamma r_t(s_{t+2},a_{t+2}) + ...)]\\
 &= \underset{a_t}{max}[r(s_t, a_t)+\gamma V^*(s_{t+1})]\label{vmaximierung}
 \end{align}
-Die Gleichung \ref{vmaximierung} kann vereichfacht folgendermaßen dargestellt werden:
+Die Gleichung \ref{vmaximierung} kann zu folgender Gleichung  vereichfacht werden:
 \begin{align}\label{bellmangleichung}
 V^*(s) &= max[r(s,a) + \gamma V^*(\delta(s,a))]
 \end{align}
 Diese Gleichung sagt aus, dass zur Berechnung von $V^*(s)$ die direkte Belohnung zu den mit dem Faktor $\gamma$ abgeschwächten Belohnungen aller Nachfolgezustände addiert wird. Sofern $V^*(\delta(s,a))$ bekannt ist ergibt sich $V^*(s)$ durch eine einfache lokale Optimierung über alle im Zustand $s$ möglichen Aktionen $a$. Hierdurch entspricht Gleichung \ref{bellmangleichung} dem Bellman-Prinzip und wird somit als Bellman-Gleichung bezeichnet.
 
-Die optimale Strategie $\pi^*(s)$ führt im Zustand $s$ eien Aktion aus, die zum maximalen Wert $V^*$ führt. Somit gilt folgende Gleichung:
+Die optimale Strategie $\pi^*(s)$ führt im Zustand $s$ eine Aktion aus, die zum maximalen Wert $V^*$ führt. Somit gilt folgende Gleichung:
 \begin{align}
 \pi^*(s) = \underset{a}{argmax}[r(s,a) + \gamma V^*(\delta(s,a))]
 \end{align}
@@ -137,6 +138,7 @@ Zu Beginn des Verfahrens wird $\widehat{V}$ für alle Zustände mit $0$ initiali
     \centering
     \includegraphics[width=0.6\textwidth]{Grafiken/value-iteration.png}
     \caption{Pseudocode des Value-Iteration Algorithmus}
+    \label{valueiteration}
 \end{figure}
 
 \section{Temporal Difference Learning}
