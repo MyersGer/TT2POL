@@ -19,7 +19,7 @@
 \usepackage{colortbl}
 \usepackage[absolute]{textpos}
 \usepackage{float}
-\usepackage[colorinlistoftodos,textsize=small,textwidth=2cm,shadow,bordercolor=black,backgroundcolor={red!100!green!33},linecolor=black]{todonotes}
+%\usepackage[colorinlistoftodos,textsize=small,textwidth=2cm,shadow,bordercolor=black,backgroundcolor={red!100!green!33},linecolor=black]{todonotes}
 
 \lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, breaklines=true, showstringspaces=false} 
 \restylefloat{figure}
@@ -56,8 +56,8 @@
 
 %	\listoftables                                 												% 
 	\listoffigures  
-	\lstlistoflistings	
-
+%	\lstlistoflistings	
+\newpage
 \section{Grundlagen}
 Verstärkendes Lernen oder Bestärkendes Lernen (engl. Reinforcement Learning), ist der Überbegriff für eine Reihe von Methoden zum Maschinellen Lernen (engl. Machine Learning). Beim Verstärkenden Lernen gibt es keine Vorgabe von Trainingsbeispielen, der Agent kann nur aus den eigenen Erfahrungen lernen. Ein Agent befindet sich immer in einer Umwelt, über die er Informationen besitzen muss. Ein real existierender Agent (im Gegensatz zu einem Agenten, der nur in einer Simulation virtuell vorhanden ist) nimmt Informationen über die Umwelt mit Sensoren wahr. Auf die Informationen kann er mit Aktionen reagieren, z.B. ein mechanisches Teil bewegen. Das Handeln des Agenten besteht somit aus einer Folge von Aktionen. Das Ziel des Verstärkenden Lernens ist nun, dass der Agent selbständig erkennen kann, welche Aktion die günstigste ist. Dies muss er lernen können. Dieser Lernprozess basiert auf positiven Belohnungen und negativen Belohnungen (Kosten). Höhere Belohnungen werden vom Agenten bevorzugt. Der Agent lernt, wie die Aktionen belohnt werden, somit kann er in Zukunft bessere Entscheidungen treffen (Verstärkung). Die Verstärkung kann auch erst zu spät einsetzen (z.B. nach Ende eines Spiels), so dass das gelernte Wissen erst später eine Rolle spielt (z.B. beim nächsten Spiel).
 
@@ -69,7 +69,7 @@ Die Belohnungen und der Folgezustand werden dabei als Teil des Modells der Umgeb
 
 Dynamische Programmierung ist eine Methode zum algorithmischen Lösen von Optimierungsproblemen und kann als Spezialfall von Reinforcement Learning angesehen werden. Dynamische Programmierung kann erfolgreich eingesetzt werden, wenn das Problem aus mehreren gleichartigen Teilproblemen besteht. Dabei muss sich eine optimale Lösung des Problems aus optimalen Lösungen der Teilprobleme zusammensetzen. Zuerst werden die optimalen Lösungen der kleinsten Teilprobleme berechnet. Diese werden dann geeignet zu einer Lösung eines nächstgrößeren Teilproblems zusammenzusetzen. Diese Schritte werden wiederholt. Einmal berechnete Teilergebnisse werden gespeichert, um bei nachfolgenden Berechnungen gleichartiger Teilprobleme auf diese Zwischenlösungen zurück greifen zu können, anstatt eine neue Berechnung anstellen zu müssen. 
 
-Die Voraussetzung, um dynamische Programmierung anwenden zu können ist ein vollständiges Modell. Dies bedeutet, dass alle Zustände inklusive ihrer Rewards und Folgezustände in Abhängigkeit von Ausgangszustand und einer Aktion bekannt sind.
+Die Voraussetzung, um dynamische Programmierung anwenden zu können ist ein vollständiges Modell. Dies bedeutet, dass alle Zustände inklusive ihrer Belohnungen und Folgezustände in Abhängigkeit von Ausgangszustand und einer Aktion bekannt sind.
 Somit sind $\mathcal{P}^{a}_{ss'}$ und $\mathcal{R}^{a}_{ss'}$ bekannt und müssen nicht erst durch Erfahrungen geschätzt werden.
 
 \subsection{Policy Evaluation}
@@ -94,7 +94,50 @@ Es gibt verschiedene Möglichkeiten, diese  Entscheidung zu treffen. Eine ist, i
 
 \subsection{Policy Iteration}
 \subsection{Value Iteration}
+Bei einer Strategie $\pi : S \rightarrow A $ werden Zustände auf Aktionen abgebildet. Die Strategie ist optimal, sofern sie Belohnung $r$ maximiert. Die Abgeschwächte Belohnung einer Strategie $\pi$ wird durch folgende Gleichung dargestellt:
+\begin{align}\label{gleichungvp}
+V^{\pi}(s_t) &= r_t + \gamma r_{t+1} + \gamma^2r_{t+2} + ... = \sum^{\infty}_{i=0} \gamma^ir_{t+1}
+\end{align}
+Die Variable $\gamma$ stellt eine Konstante darf, für die folgendes gilt: $0 \geq \gamma < 1$. Sie sorgt dafür das ein Feedback das weiter in der Zukunft liegt abgeschwächt wird. Hierdurch wird die direkte Belohnung $r_t$ am stärksten gewichtet.
 
+Eine Strategie ist optimal, sofern sie ebenso gut wie alle anderen Strategien oder besser als diese ist. Bezeichnet wird diese mit $\pi^*$ und mathematisch folgendermaßen ausgedrückt:
+\begin{align}\label{voptimal}
+V^{\pi*}(s)\geq V^\pi(s)
+\end{align}
+Im Folgendem wird $V^{\pi*}$ mit $V^*$ bezeichnet.
+
+Basierend auf dem Bellman-Prinzipg ist es möglich durch Optimierung einzelner Aktionen eine optimale Strategie zu finden. Gesucht ist eine optimale Strategie, die die Gleichungen \ref{gleichungvp} und \ref{voptimal} erfüllt. Hierfür kann folgende Gleichung aufgestellt werden:
+\begin{align}
+V^*(s_t) &= \underset{a_t,a_{t+1}, a_{t+2},...}{max}(r_t(s_t,a_t) + \gamma r_t(s_{t+1},a_{t+1}) + \gamma r_t(s_{t+2},a_{t+2}) + ...)
+\end{align}
+Da die direkte Belohnung $r(s_t, a_t)$ nicht von den Nachfolgezuständen und Belohnung abhängt sondern nur  von $s_t$ und $a_t$ kann die Maximierung aufgeteilt werden. Somt ergeben sich folgende Gleichungen:
+\begin{align}
+V^*(s_t) &= \underset{a_t,a_{t+1}, a_{t+2},...}{max}[r(s_t, a_t) + \gamma \underset{a_{t+1},a_{t+2},...}{max}(r_t(s_{t+1},a_{t+1}) + \gamma r_t(s_{t+2},a_{t+2}) + ...)]\\
+&= \underset{a_t}{max}[r(s_t, a_t)+\gamma V^*(s_{t+1})]\label{vmaximierung}
+\end{align}
+Die Gleichung \ref{vmaximierung} kann vereichfacht folgendermaßen dargestellt werden:
+\begin{align}\label{bellmangleichung}
+V^*(s) &= max[r(s,a) + \gamma V^*(\delta(s,a))]
+\end{align}
+Diese Gleichung sagt aus, dass zur Berechnung von $V^*(s)$ die direkte Belohnung zu den mit dem Faktor $\gamma$ abgeschwächten Belohnungen aller Nachfolgezustände addiert wird. Sofern $V^*(\delta(s,a))$ bekannt ist ergibt sich $V^*(s)$ durch eine einfache lokale Optimierung über alle im Zustand $s$ möglichen Aktionen $a$. Hierdurch entspricht Gleichung \ref{bellmangleichung} dem Bellman-Prinzip und wird somit als Bellman-Gleichung bezeichnet.
+
+Die optimale Strategie $\pi^*(s)$ führt im Zustand $s$ eien Aktion aus, die zum maximalen Wert $V^*$ führt. Somit gilt folgende Gleichung:
+\begin{align}
+\pi^*(s) = \underset{a}{argmax}[r(s,a) + \gamma V^*(\delta(s,a))]
+\end{align}
+Aus der Rekursionsgleichung \ref{bellmangleichung} ergibt sich folgende Iterationsvorschrift zur Berechnung von $V^*$:
+\begin{align}
+\widehat{V}(s) = \underset{a}{max}[r(s,a) + \gamma \widehat{V}(\delta(s,a))]
+\end{align}
+Dieses Verfahren zur Berechnung von $V^*$ wird als ``Value Iteration'' bezeichnet. 
+Abbildung \ref{valueiteration} zeigt den Algorithmus in Form von Pseudocode.\\
+Zu Beginn des Verfahrens wird $\widehat{V}$ für alle Zustände mit $0$ initialisiert. Darauffolgend wird für jeden $\widehat{V}(s)$ für jeden Zustand aktualisiert indem rekusriv auf den Wert $\widehat{V}(\delta(s,a))$ des besten Nachfolgezustands zugegriffen wird.
+
+\begin{figure}[htc]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Grafiken/value-iteration.png}
+    \caption{Pseudocode des Value-Iteration Algorithmus}
+\end{figure}
 
 \section{Temporal Difference Learning}
 
