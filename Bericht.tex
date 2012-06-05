@@ -96,8 +96,8 @@ In der Abbildung \ref{fig:policyevaluation} ist der Pseudocode des Algorithmus a
 \end{figure}
 
 \subsection{Policy Improvement}
-Grund für das Ermitteln einer Wertfunktion, ist das Bestreben eine bessere Strategie finden zu wollen. Wenn $V^\pi$ eine beliebige Wertfunktion für die  Strategie $\pi$ ist,  ist es interessant, ob für einen Zustand $s$ eine andere Aktion $a\neq\pi(s)$   gewählt werden soll, oder aber die alte Aktion $a=\pi(s)$ beibehalten werden soll.
-Es gibt verschiedene Möglichkeiten, diese  Entscheidung zu treffen. Eine ist, irgendeine Aktion $a$ zu wählen und dann mit der bestehenden Strategie $\pi$ fortzufahren. Der Wert durch Ausführen dieses $a$s ist durch $Q^\pi(s,a)$ beschrieben. Die Frage, die sich stellt, ist: Ist $Q^\pi(s,a)$ besser als $V^\pi(s)$?.
+Grund für das Ermitteln einer Wertfunktion, ist das Bestreben eine bessere Strategie zu finden. Wenn $V^\pi$ eine beliebige Wertfunktion für die  Strategie $\pi$ ist,  ist es interessant, ob für einen Zustand $s$ eine andere Aktion $a\neq\pi(s)$   gewählt werden soll, oder aber die alte Aktion $a=\pi(s)$ beibehalten werden soll.
+Es gibt verschiedene Möglichkeiten, diese  Entscheidung zu treffen. Eine ist, eine beliebige Aktion $a$ zu wählen und dann mit der bestehenden Strategie $\pi$ fortzufahren. Der Wert durch Ausführen dieses $a$s ist durch $Q^\pi(s,a)$ beschrieben. Die Frage, die sich stellt, ist: Ist $Q^\pi(s,a)$ besser als $V^\pi(s)$?
 Ist dies der Fall, sollte die ermittelte Aktion $a$ der bestehenden Strategie vorgezogen werden.
 
 Seien $\pi$ und $\pi'$ ein beliebiges Paar von Strategien, so dass für alle $s \in S$ gilt:
@@ -110,6 +110,14 @@ Dann ist Strategie $\pi'$  mindestens so gut wie $\pi$, was wiederum bedeutet:
 \begin{align*}
 V^{\pi'}(s) \ge V^\pi(s)
 \end{align*}
+
+Mathematisch ausgedrückt kann die beste Aktion $a$ für den Zustand $s$ folgendermaßen gefunden werden:
+
+\begin{align}\label{policy-improvement}
+\pi'(s) &= arg\underset{a}{max}\sum_{s'}\mathcal{P}^a_{ss'}[\mathcal{R}^a_{ss'}+\gamma V^\pi(s')]
+\end{align}
+
+Die Funktion $argmax$ gibt gibt den Funktionsparameter zurück, für den die Funktion den höchsten Wert ergibt\footnote{Z.B. wenn $f(1)=10, f(2) = 50, f(3) = 25$ dann würde $arg\underset{x}{max}f(x)$ den Wert $2$ zurückliefern}. In Gleichung \ref{policy-improvement} wird somit das $a$ zurückgeben, was den höchsten Wert ergibt und so eine Strategie-Verbesserung erreicht. $\pi'$ stellt die verbesserte Strategie dar.
 
 \subsection{Policy Iteration}
 \subsection{Value Iteration}
