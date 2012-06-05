@@ -101,15 +101,15 @@ Es gibt verschiedene Möglichkeiten, diese  Entscheidung zu treffen. Eine ist, e
 Ist dies der Fall, sollte die ermittelte Aktion $a$ der bestehenden Strategie vorgezogen werden.
 
 Seien $\pi$ und $\pi'$ ein beliebiges Paar von Strategien, so dass für alle $s \in S$ gilt:
-\begin{align*}
+\begin{align}
 Q^\pi(s,\pi'(s)) \ge V^\pi(s)
-\end{align*}
+\end{align}
 
 Dann ist Strategie $\pi'$  mindestens so gut wie $\pi$, was wiederum bedeutet:
 
-\begin{align*}
+\begin{align}
 V^{\pi'}(s) \ge V^\pi(s)
-\end{align*}
+\end{align}
 
 Mathematisch ausgedrückt kann die beste Aktion $a$ für den Zustand $s$ folgendermaßen gefunden werden:
 
@@ -120,6 +120,15 @@ Mathematisch ausgedrückt kann die beste Aktion $a$ für den Zustand $s$ folgend
 Die Funktion $argmax$ gibt gibt den Funktionsparameter zurück, für den die Funktion den höchsten Wert ergibt\footnote{Z.B. wenn $f(1)=10, f(2) = 50, f(3) = 25$ dann würde $arg\underset{x}{max}f(x)$ den Wert $2$ zurückliefern}. In Gleichung \ref{policy-improvement} wird somit das $a$ zurückgeben, was den höchsten Wert ergibt und so eine Strategie-Verbesserung erreicht. $\pi'$ stellt die verbesserte Strategie dar.
 
 \subsection{Policy Iteration}
+Falls sich die Strategie beim Strategie-Verbesserungsschritt (``Policy Improvement'') ändert muss diese neu ausgewertet werden. Somit müssen die V-Werte neu berechnet werden, da sie sich möglicherweise verändert haben.
+
+Hieraus ergibt sich ein Verfahren mit dem schrittweise eine verbesserte Strategie gefunden werden kann. Es wird ausgehend von einer Strategie $\pi_0$ durch abwechselndes Ausführen des Evaluationsschrittes (E) und Verbesserungsschrittes (I) eine bessere Strategie $\pi_1$ berechnet. Im Evaluationsschritt werden die verbesserten $V^{\pi_0}$ Werte berechnet, aus denen dann die Verbesserte Strategie im Verbesserungsschritt abgeleitet wird. Das Verfahren kann durch  folgenden Ausdruck veranschaulicht werden:
+\begin{align}
+\pi_0 \overset{E}{\longrightarrow} V^{\pi_0} \overset{I}{\longrightarrow} \pi_1 \overset{E}{\longrightarrow} V^{\pi_1} \overset{I}{\longrightarrow} \pi_2  \overset{E}{\longrightarrow} V^{\pi_2} \overset{I}{\longrightarrow} ... \pi^*
+\end{align}
+
+Das Verfahren terminiert sofern sich die Strategie beim Verbesserungsschritt nicht mehr verändert.
+
 \subsection{Value Iteration}
 Bei einer Strategie $\pi : S \rightarrow A $ werden Zustände auf Aktionen abgebildet. Die Strategie ist optimal, sofern sie Belohnung $r$ maximiert wird. Die abgeschwächte Belohnung einer Strategie $\pi$ kann durch folgende Gleichung berechnet werden:
 \begin{align}\label{gleichungvp}
