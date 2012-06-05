@@ -27,7 +27,7 @@
 %changehere
 \def\titletext{Bericht TT2P 1}
 \def\titletextshort{Praktikum 1}
-\author{Steffen Brauer, André Harms,\\ Florian Johannßen, Jan Meier,\\ Florian Ocker, Olaf Potratz,\\ Torben Woggan}
+\author{Steffen Brauer, André Harms,\\ Florian Johannßen, Jan-Christoph Meier,\\ Florian Ocker, Olaf Potratz,\\ Torben Woggan}
 
 \title{\titletext}
 
@@ -39,7 +39,7 @@
 \ihead{TT2, Neitzke}
 \ifoot{Generiert am:\\ \today}
 
-\cfoot{Steffen Brauer, André Harms,\\ Florian Johannßen, Jan Meier,\\ Florian Ocker, Olaf Potratz,\\ Torben Woggan}
+\cfoot{Steffen Brauer, André Harms,\\ Florian Johannßen, Jan-Christoph Meier,\\ Florian Ocker, Olaf Potratz,\\ Torben Woggan}
 
 
 \ohead[]{\titletextshort}
@@ -67,13 +67,13 @@ Die Belohnungen und der Folgezustand werden dabei als Teil des Modells der Umgeb
 
 \section{Dynamische Programmierung}
 
-Dynamische Programmierung ist eine Methode zum algorithmischen Lösen von Optimierungsproblemen und kann als Spezialfall von Reinforcement Learning angesehen werden. Dynamische Programmierung kann erfolgreich eingesetzt werden, wenn das Problem aus mehreren gleichartigen Teilproblemen besteht. Dabei muss sich eine optimale Lösung des Problems aus optimalen Lösungen der Teilprobleme zusammensetzen. Zuerst werden die optimalen Lösungen der kleinsten Teilprobleme berechnet. Diese werden dann geeignet zu einer Lösung eines nächstgrößeren Teilproblems zusammenzusetzen. Diese Schritte werden wiederholt. Einmal berechnete Teilergebnisse werden gespeichert, um bei nachfolgenden Berechnungen gleichartiger Teilprobleme auf diese Zwischenlösungen zurück greifen zu können, anstatt eine neue Berechnung anstellen zu müssen. 
+Dynamische Programmierung ist eine Methode zum algorithmischen Lösen von Optimierungsproblemen und kann als Spezialfall von Reinforcement Learning angesehen werden. Dynamische Programmierung kann erfolgreich eingesetzt werden, wenn das Problem aus mehreren gleichartigen Teilproblemen besteht. Dabei muss sich eine optimale Lösung des Problems aus optimalen Lösungen der Teilprobleme zusammensetzen. Zuerst werden die optimalen Lösungen der kleinsten Teilprobleme berechnet. Diese werden dann geeignet zu einer Lösung eines nächstgrößeren Teilproblems zusammenzusetzen. Diese Schritte werden wiederholt. Einmal berechnete Teilergebnisse werden gespeichert, um bei nachfolgenden Berechnungen gleichartiger Teilprobleme auf diese Zwischenlösungen zurückgreifen zu können, anstatt eine neue Berechnung anstellen zu müssen. 
 
 Die Voraussetzung, um dynamische Programmierung anwenden zu können ist ein vollständiges Modell. Dies bedeutet, dass alle Zustände inklusive ihrer Belohnungen und Folgezustände in Abhängigkeit von Ausgangszustand und einer Aktion bekannt sind.
 Somit sind $\mathcal{P}^{a}_{ss'}$ und $\mathcal{R}^{a}_{ss'}$ bekannt und müssen nicht erst durch Erfahrungen geschätzt werden.
 
 \subsection{Policy Evaluation}
-Policy Evaluation beschreibt die Berechnung von Zustandswerten bezüglich einer gegebenen Strategie (Policy) entsprechend der Bellman-Gleichung. Es werden für eine gegebene Strategie $\pi$ die zugehörigen Wertefunktionen $V^{\pi}$ berechnet. Dabei werden episodische Probleme betrachtet, so dass ein künstlicher Endzustand $S_{final}$  und ein erweiterter Zustandsraum $S^+=S\cup{S_{final}}$ ($S$ mit $S_{final}$) definiert werden kann. Das Ergebnis wird iterativ ermittelt (bzw. approximiert). Hierzu wird eine aufeinander aufbauende Wertereihenfolge $V_0, V_1 ... V_n$ für alle Zustände in $s \in S$ generiert. $V_0$ kann dabei beliebig für alle Zustände beliebig gewählt werden. Durch Iteration der Bellman-Gleichung erfolgt eine Näherung an die Wertfunktionen der Zustände:
+Policy Evaluation beschreibt die Berechnung von Zustandswerten bezüglich einer gegebenen Strategie (Policy) entsprechend der Bellman-Gleichung. Es werden für eine gegebene Strategie $\pi$ die zugehörigen Wertefunktionen $V^{\pi}$ berechnet. Dabei werden episodische Probleme betrachtet, so dass ein künstlicher Endzustand $S_{final}$  und ein erweiterter Zustandsraum $S^+=S\cup{S_{final}}$ ($S$ mit $S_{final}$) definiert werden kann. Das Ergebnis wird iterativ ermittelt (bzw. approximiert). Hierzu wird eine aufeinander aufbauende Wertereihenfolge $V_0, V_1 ... V_n$ für alle Zustände in $s \in S$ generiert. $V_0$ kann dabei beliebig für alle Zustände  gewählt werden. Durch Iteration der Bellman-Gleichung erfolgt eine Näherung an die Wertfunktionen der Zustände:
 
 \begin{align}
 V^\pi_{k+1}(s) = \sum\limits_{a} \pi(s,a) \sum\limits_{s'}\mathcal{P}^a_{ss'}[\mathcal{R}^a_{ss'}+\gamma V^\pi_k(s')]
@@ -97,7 +97,7 @@ In der Abbildung \ref{fig:policyevaluation} ist der Pseudocode des Algorithmus a
 
 \subsection{Policy Improvement}
 Grund für das Ermitteln einer Wertfunktion, ist das Bestreben eine bessere Strategie zu finden. Wenn $V^\pi$ eine beliebige Wertfunktion für die  Strategie $\pi$ ist,  ist es interessant, ob für einen Zustand $s$ eine andere Aktion $a\neq\pi(s)$   gewählt werden soll, oder aber die alte Aktion $a=\pi(s)$ beibehalten werden soll.
-Es gibt verschiedene Möglichkeiten, diese  Entscheidung zu treffen. Eine ist, eine beliebige Aktion $a$ zu wählen und dann mit der bestehenden Strategie $\pi$ fortzufahren. Der Wert durch Ausführen dieses $a$s ist durch $Q^\pi(s,a)$ beschrieben. Die Frage, die sich stellt, ist: Ist $Q^\pi(s,a)$ besser als $V^\pi(s)$?
+Es gibt verschiedene Möglichkeiten, diese  Entscheidung zu treffen. Eine ist, eine beliebige Aktion $a$ zu wählen und dann mit der bestehenden Strategie $\pi$ fortzufahren. Der Wert durch Ausführen dieses Aktion $a$ ist durch $Q^\pi(s,a)$ beschrieben. Die Frage, die sich stellt, ist: Ist $Q^\pi(s,a)$ besser als $V^\pi(s)$?
 Ist dies der Fall, sollte die ermittelte Aktion $a$ der bestehenden Strategie vorgezogen werden.
 
 Seien $\pi$ und $\pi'$ ein beliebiges Paar von Strategien, so dass für alle $s \in S$ gilt:
