@@ -75,15 +75,15 @@ Somit sind $\mathcal{P}^{a}_{ss'}$ und $\mathcal{R}^{a}_{ss'}$ bekannt und müss
 \subsection{Policy Evaluation}
 Policy Evaluation beschreibt die Berechnung von Zustandswerten bezüglich einer gegebenen Strategie (Policy) entsprechend der Bellman-Gleichung. Es werden für eine gegebene Strategie $\pi$ die zugehörigen Wertefunktionen $V^{\pi}$ berechnet. Dabei werden episodische Probleme betrachtet, so dass ein künstlicher Endzustand $S_{final}$  und ein erweiterter Zustandsraum $S^+=S\cup{S_{final}}$ ($S$ mit $S_{final}$) definiert werden kann. Das Ergebnis wird iterativ ermittelt (bzw. approximiert). Hierzu wird eine aufeinander aufbauende Wertereihenfolge $V_0, V_1 ... V_n$ für alle Zustände in $s \in S$ generiert. $V_0$ kann dabei beliebig für alle Zustände beliebig gewählt werden. Durch Iteration der Bellman-Gleichung erfolgt eine Näherung an die Wertfunktionen der Zustände:
 
-\begin{align*}
+\begin{align}
 V^\pi_{k+1}(s) = \sum\limits_{a} \pi(s,a) \sum\limits_{s'}\mathcal{P}^a_{ss'}[\mathcal{R}^a_{ss'}+\gamma V^\pi_k(s')]
-\end{align*}
+\end{align}
 
 Dies geschieht für alle Zustände in $S^+$. Vor der Iteration wird $V^\pi_k$  (beim Start ist $k=0$) mit Null initialisiert. Die Iteration erfolgt von $k=0$ bis unendlich, jedoch wird abgebrochen sobald die  Abbruchbedingung erfüllt ist. Durch ausreichend langes Iterieren tastet man sich beliebig nahe an die echte Wertfunktion heran. Als Abbruchbedigung dient folgender Term:
 
-\begin{align*}
+\begin{align}
 \max\limits_{s\in S^+} |V_{k+1}(s)-V_k(s)|
-\end{align*}
+\end{align}
 
 Es wird hierbei der größte Differenz-Wert zwischen zwei Schritten genommen und  auf Überschreiten des Schwellwertes überprüft.\\
 In der Abbildung \ref{fig:policyevaluation} ist der Pseudocode des Algorithmus aufgeführt.
@@ -130,6 +130,30 @@ Hieraus ergibt sich ein Verfahren mit dem schrittweise eine verbesserte Strategi
 Das Verfahren terminiert sofern sich die Strategie beim Verbesserungsschritt nicht mehr verändert.
 
 \subsection{Value Iteration}
+Eine wichtige Frage für die Laufzeit und Performanz des Verfahrens wie häufig bei der Strategie-Evaluation über die Bellman-Gleichung iteriert werden soll. Es ist durchaus denkbar, dass bereits nicht besonders exakte V-Werte zu einer Verbesserung der Strategie führen.
+
+Der Ansatz der ``Value Iteration'' besteht darin nur eine Iteration der Bellman-Gleichung im Evalutaionsschritt und direkt darauf folgend eine Strategie-Verbesserung durchzuführen.
+Die folgenden beiden Schritte werden abwechselnd durchgeführt (Gleichung \ref{valueiteration1} ist die Strategie Evaluation, Gleichung \ref{valueiteration2} ist die Strategie Verbesserung).
+\begin{align}\label{valueiteration1}
+V^\pi_{k+1}(s) &= \sum\limits_{a} \pi_{k+1}(s,a) \sum\limits_{s'}\mathcal{P}^a_{ss'}[\mathcal{R}^a_{ss'}+\gamma V^\pi_k(s')]\\
+\pi_{k+1}(s) &= arg\underset{a}{max}\sum_{s'}\mathcal{P}^a_{ss'}[\mathcal{R}^a_{ss'}+\gamma V^\pi(s')]\label{valueiteration2}
+\end{align}
+
+Die beiden Gleichungen werden zu einer Gleichung zusammengefasst:
+\begin{align}
+V_{k+1}(s) &= \underset{a}{max}\sum\mathcal{P}^a_{ss'}[\mathcal{R}^a_{ss'}+\gamma V^\pi(s')]
+\end{align}
+Die Funktion $max$ gibt den besten Wert zurück, der mit einem Parameter a erreicht werden kann\footnote{Z.B. wenn $f(1)=10, f(2)=50, f(3) = 25$ dann würde $\underset{x}{max}$ den Wert $50$ zurückgeben}. Als Abbruchkriterien wird wieder wie bei der ``Policy Evaluation'' die Unterschreitung eines bestimmten Schwellenwertes festgelegt: 
+\begin{align}
+\max\limits_{s\in S^+} |V_{k+1}(s)-V_k(s)|
+\end{align}
+In der Abbildung \ref{fig:valueiteration} ist der Pseudocode des ``Value Itation''-Algorithmus aufgeführt.
+\begin{figure}[htc]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Grafiken/24vi.png}
+    \caption{Pseudocode des Value-Iteration Algorithmus}
+    \label{fig:valueiteration}
+\end{figure}
 
 \section{Temporal Difference Learning}
 
