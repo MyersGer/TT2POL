@@ -185,9 +185,18 @@ Es ist natürlich nicht sinnvoll einen Agenten zufällig agieren zu lassen und i
 \subsection{On-Policy TD und Off-Policy TD}
 On-Policy und Off-Policy TD sind Strategiverbesserungsverfahren, die TD-Learning einsetzen(sic!).
 
-Bei On-Policy TD wird der nächste Zustand anhand eines Pfades berechnet. Falls zufällig durch $\epsilon$ ein nicht optimaler Pfad gewählt wird, kann ein Zustand möglicherweise komplett ausscheiden, obwohl er für die Zielerreichung essentiell wäre. 
+Bei On-Policy TD(SARSA) wird der nächste Zustand anhand eines Pfades berechnet. Falls zufällig durch $\epsilon$ ein nicht optimaler Pfad gewählt wird, kann ein Zustand möglicherweise komplett ausscheiden, obwohl er für die Zielerreichung essentiell wäre. 
+\begin{equation}
+Q(s_t,a_t) \leftarrow Q(s_t,a_t) + \alpha[r_{t+1}+\gamma Q(s_{t+1},a_{t+1})- Q(s_t,a_t)]
+\end{equation}
 
-Im Gegensatz dazu wird beim Off-Policy TD die Werteberechnung des nächsten Zustands nicht nur enstprechend eines Pfades durchgeführt, sonder jeweils immer der beste Nachfolgezustand einbezogen. 
+Die Verbesserung der Q Funktion setzt sich hierbei aus dem alten Funktionswert plus einen durch $\alpha$ abgeschwächten Wert, der aus der zu erwartender Belohnung, sowie der Differenz zwischen Erwartungswert des nächsten und dieses Zustands.
+
+Im Gegensatz dazu wird beim Off-Policy TD die Werteberechnung des nächsten Zustands nicht nur entsprechend eines Pfades durchgeführt, sonder jeweils immer der beste Nachfolgezustand einbezogen. 
+Die Formel ändert sich hier nur im letzten Teil:
+\begin{equation}
+Q(s_t,a_t) \leftarrow Q(s_t,a_t) + \alpha[r_{t+1}+\gamma  \max_\alpha Q(s_{t+1},a)- Q(s_t,a_t)]
+\end{equation}
 
 
 \section{Fazit}
