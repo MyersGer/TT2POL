@@ -164,6 +164,31 @@ In der Abbildung \ref{fig:valueiteration} ist der Pseudocode des ``Value Itation
 \end{figure}
 
 \section{Temporal Difference Learning}
+Temporal Difference Learning (TD-Learning) beschreibt eine Klasse von Verfahren, die ein Lernen allein aus Erfahrungen ermöglicht. 
+
+Bei der Methode wird versucht die Zustands-Wertfunktion (V-Funktion) zu verbessern. Dazu wird davon ausgegangen, dass der Agent bereits eine vorläufige V-Funktion besitzt, welche aber noch nicht der Wirklichkeit entspricht. Weiterhin müssen Erfahrungen in der Bewertung von zurückliegenden Zuständen einfliessen, da Erfahrungen womöglich erst nach einiger Zeit "zu Tage treten". Somit ist davon auszugehen, dass die Wertfunktion in späteren Zuständen schon näher an der Wirklichkeit liegt. Da jedoch bis zur vollständigen Exploration der Umgebung die V-Funktion von der tatsächlichen Wertefunktion abweicht, wird diese geschätzt.
+Dies wird durch folgende Formel spezifiziert:
+\begin{equation}
+V^\pi = E_\pi{r_{t+1}+\gamma V^ \pi(s_{t+1})}
+\end{equation}
+
+Die Zustands-Wertefunktion V für die Strategie $\pi$ ist gleich dem Erwartungswert für den zu erwartenden Gewinn $r_{t+1}$ und der über den Trace-Decay-Faktor verminderten V-Funktion des Folgezustands.
+
+Der Trace-Decay-Faktor ($\gamma$) beschreibt, wie groß die Gewichtung von zukünftigen Entscheidungen ist. Dadurch werden nähere Zustände höher bewertet als spätere, bzw. zukünftige Belohnungen werden schwächer bewertet. Ist der Trace-Decay-Faktor  gleich 1, so entspricht das TD-Learning der Monte-Carlo-Methode.
+
+Weiterhin gibt es noch einen $\alpha$-Wert, welcher angibt, wie nah der Folgewert an dem V-Wert des jetztigen Zustands annähert.Für hinreichend kleine $\alpha$ nähert sich die Methode dem korrektem V-Wert. Somit indiziert $\alpha$ die Lernrate zur Steuerung der Korrekturstärke, also in welchem Maße die Funktion verbessert oder geändert wird.
+
+\subsection{Gierige Wahl von Aktionen}
+Eine Strategie heißt gierieg (greedy), wenn sie immer versucht die Aktion zu wählen, die zu einer optimalen Wertefunktion führt. Daraus resultiert das Problem, dass manche Aktionen nicht ausgeführt werden, obwohl die Erfahrung langfristig zeigen würde, dass sie eigentlich besser wären. 
+Es ist natürlich nicht sinnvoll einen Agenten zufällig agieren zu lassen und ihn nicht auf seine Erfahrungen zurückgreifen zu lassen. Deshalb wird der Parameter $\epsilon$ eingeführt, welcher angibt, wie häufig nicht optimale Aktionen ausgewählt werden. Für $\epsilon = 0$ ist die Strategie gierig, sonst nennt man sie $\epsilon$-gierig. Meist wird ein konstanter, kleiner $\epsilon$-Wert gewählt. 
+
+\subsection{On-Policy TD und Off-Policy TD}
+On-Policy und Off-Policy TD sind Strategiverbesserungsverfahren, die TD-Learning einsetzen(sic!).
+
+Bei On-Policy TD wird der nächste Zustand anhand eines Pfades berechnet. Falls zufällig durch $\epsilon$ ein nicht optimaler Pfad gewählt wird, kann ein Zustand möglicherweise komplett ausscheiden, obwohl er für die Zielerreichung essentiell wäre. 
+
+Im Gegensatz dazu wird beim Off-Policy TD die Werteberechnung des nächsten Zustands nicht nur enstprechend eines Pfades durchgeführt, sonder jeweils immer der beste Nachfolgezustand einbezogen. 
+
 
 \section{Fazit}
 
