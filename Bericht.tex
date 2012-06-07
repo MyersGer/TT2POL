@@ -65,6 +65,14 @@ Konkret wird vom Zeitpunkt $t$, dem Zustand $s_t$, der Aktion $a_t$ und der Belo
 
 Die Belohnungen und der Folgezustand werden dabei als Teil des Modells der Umgebung angesehen. Allerdings ist die Umgebung im Allgemeinen nicht-deterministisch. Das Ausführen einer bestimmten Aktion in einem bestimmten Zustand muss somit nicht immer im gleichen Folgezustand resultieren. Der Übergang in die Folgezustände basiert aber immer auf den gleichen Wahrscheinlichkeiten, die sich im Laufe der Zeit auch nicht verändern, man sagt die Umgebung ist stationär.
 
+Jeder Agent verfolgt eine bestimmte Strategie (engl. Policy), die definiert, welche Aktionen abhängig vom Zustand ausgeführt werden. Dabei unterscheidet man zwischen der stochastischen Strategie und der deterministischen Strategie. Die zuerst erwähnte Strategieart weißt jeder Aktion $a$ eine bestimmte Wahrscheinlichkeit zu, mit der sie ausgehend vom Zustand $s$ ausgeführt wird. Die deterministische Strategie ordnet stattdessen jedem Zustand eine bestimmte Aktion zu. Das Ziel eines Agenten besteht darin, seine Belohnung über die Gesamtlaufzeit zu maximieren und damit die optimale Strategie {$\pi^*$} zu erlangen.
+Dabei hängt $\pi^*$ von der Belohnungsfunktion ab, welche die Güte einer Entscheidungssequenz ermittelt. 
+Bei episodischen Aufgaben endet jeder abschließender Schritt $T$ mit der Berechnung der Belohnung $R_t$ für die entsprechende Episode, die wie folgt ermittelt wird:
+$R_t = r_{t+1} + r_{t+2} + r_{t+3} ... r_T$  
+Bei fortlaufenden Aufgaben hat man das Problem, dass die Belohnungen und Kosten ins unendliche steigen könnten. Um dies zu vermeiden, wird das sogenannte $discounting$ verwendet. Dieses Prinzip schwächt zukünftige Belohnungen. Hierzu wird eine discounting-rate $0\le \gamma \le1$ eingeführt, welche dafür sorgt, dass die Gesamtbelohnung begrenzt wird und nicht ins unendliche steigt. Die nächste Formel zeigt die Verwendung der counting-rate für die Berechnung der Belohnung.
+$R_t = \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^2 r_{t+3} ... r_T$
+
+
 \section{Dynamische Programmierung}
 
 Dynamische Programmierung ist eine Methode zum algorithmischen Lösen von Optimierungsproblemen und kann als Spezialfall von Reinforcement Learning angesehen werden. Dynamische Programmierung kann erfolgreich eingesetzt werden, wenn das Problem aus mehreren gleichartigen Teilproblemen besteht. Dabei muss sich eine optimale Lösung des Problems aus optimalen Lösungen der Teilprobleme zusammensetzen. Zuerst werden die optimalen Lösungen der kleinsten Teilprobleme berechnet. Diese werden dann geeignet zu einer Lösung eines nächstgrößeren Teilproblems zusammenzusetzen. Diese Schritte werden wiederholt. Einmal berechnete Teilergebnisse werden gespeichert, um bei nachfolgenden Berechnungen gleichartiger Teilprobleme auf diese Zwischenlösungen zurückgreifen zu können, anstatt eine neue Berechnung anstellen zu müssen. 
