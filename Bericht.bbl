@@ -1,0 +1,24 @@
+\begin{thebibliography}{2}
+% this bibliography was produced with the style dinat.bst v2.5
+\makeatletter
+\newcommand{\dinatlabel}[1]%
+{\ifNAT@numbers\else\NAT@biblabelnum{#1}\hspace{2\labelsep}\fi}
+\makeatother
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax\def\url#1{\texttt{#1}}\fi
+
+\bibitem[Dauscher und Uthmann(2011)]{krl}
+\dinatlabel{Dauscher und Uthmann 2011} \textsc{Dauscher}, Peter~;
+  \textsc{Uthmann}, Thomas:
+\newblock \emph{Kurzskript Reinforcement Learning}.
+\newblock http://www.staff.uni-mainz.de/dauscher/softcomp/rlscript.pdf [gesehen
+  am 9.6.2012].
+\newblock 2011
+
+\bibitem[Sutton und Barto(2005)]{rli}
+\dinatlabel{Sutton und Barto 2005} \textsc{Sutton}, Richard~S.~;
+  \textsc{Barto}, Andrew~G.:
+\newblock \emph{Reinforcement Learning: An Introduction}.
+\newblock The MIT Press, 2005
+
+\end{thebibliography}
