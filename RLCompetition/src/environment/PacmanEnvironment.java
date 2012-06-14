@@ -1,29 +1,4 @@
 package environment;
-/*
- * Copyright 2008 Brian Tanner
- * http://rl-glue-ext.googlecode.com/
- * brian@tannerpages.com
- * http://brian.tannerpages.com
- * 
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
-
- *  $Revision: 998 $
- *  $Date: 2009-02-08 20:21:50 -0700 (Sun, 08 Feb 2009) $
- *  $Author: brian@tannerpages.com $
- *  $HeadURL: http://rl-library.googlecode.com/svn/trunk/projects/packages/examples/mines-sarsa-java/SampleMinesEnvironment.java $
-
- *
- */
 
 import java.util.Random;
 import org.rlcommunity.rlglue.codec.EnvironmentInterface;
@@ -36,36 +11,15 @@ import org.rlcommunity.rlglue.codec.taskspec.TaskSpec;
 import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
 
-/**
- * This code is adapted from the Mines.cpp code written by Adam White
- * for earlier versions of RL-Glue.
- *
- * See the RL-Library page: 
- * http://library.rl-community.org/environments/mines
- *
- *	This is a very simple discrete-state, episodic grid world that has
- *	exploding mines in it.  If the agent steps on a mine, the episode
- *	ends with a large negative reward.
- *
- *	The reward per step is -1, with +10 for exiting the game successfully
- *	and -100 for stepping on a mine.
- *
- * This example follows my (Brian Tanner) favorite pattern of keeping the dynamics
- * of the world fairly separate from the class that implements EnvironmentInterface.
- * In this case, I've put it in the class WorldDescription, which is inside this
- * same Java file as SampleMinesEnvironment.  Usually I would put it in a separate
- * file.  This separation means that SampleMinesEnvironment doesn't need to know
- * much about the dynamics of the world, and WorldDescription doesn't need to know
- * much about RL-Glue.
- * 
- * @author Brian Tanner
- */
-public class SampleMinesEnvironment implements EnvironmentInterface {
+
+public class PacmanEnvironment implements EnvironmentInterface {
 
     static final int WORLD_FREE = 0;
     static final int WORLD_OBSTACLE = 1;
     static final int WORLD_MINE = 2;
-    static final int WORLD_GOAL = 3;
+    static final int WORLD_PILL = 3;
+    static final int WORLD_POWERPILL = 4;
+    static final int WORLD_GHOST = 5;
 
     //WorldDescription contains the state of the world and manages the dynamics.
     WorldDescription theWorld;
@@ -81,10 +35,16 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
 
         int world_map[][] = new int[][]{
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 1, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1},
+            {1, 4, 3, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 4, 1},
+            {1, 3, 1, 1, 3, 1, 1, 1, 3, 1, 3, 1, 1, 1, 1, 1, 3, 1},
+            {1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1},
+            {1, 3, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1},
+            {1, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 3, 1, 1, 1, 1, 3, 1},
+            {1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 3, 1},
+            {1, 3, 1, 1, 1, 1, 3, 3, 3, 0, 3, 3, 3, 1, 1, 1, 3, 1},
+            {1, 3, 3, 3, 3, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1, 1, 3, 1},
+            {1, 1, 3, 1, 3, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1, 1, 3, 1},
+            {1, 1, 4, 1, 3, 3, 3, 1, 0, 5, 0, 1, 3, 3, 3, 3, 4, 1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
 
@@ -114,7 +74,7 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
 
         return taskSpecString;
     }
-
+    
     /**
      * Put the environment in a random state and return the appropriate observation.
      * @return
@@ -200,10 +160,17 @@ public class SampleMinesEnvironment implements EnvironmentInterface {
      * @param args
      */
     public static void main(String[] args) {
-        EnvironmentLoader theLoader = new EnvironmentLoader(new SampleMinesEnvironment());
+        EnvironmentLoader theLoader = new EnvironmentLoader(new PacmanEnvironment());
         theLoader.run();
     }
 }
+
+
+
+
+
+
+
 
 /**
  * This class holds all of the internal state information about the environment,
@@ -229,6 +196,7 @@ class WorldDescription {
     public int getNumStates() {
         return numRows * numCols;
     }
+    
 
     /**
      * Puts the agent into a random state.  Uses a generate and test method, in
@@ -239,10 +207,7 @@ class WorldDescription {
         int startRow = randGen.nextInt(numRows);
         int startCol = randGen.nextInt(numCols);
 
-        while (isTerminal(startRow, startCol) || !isValid(startRow, startCol)) {
-            startRow = randGen.nextInt(numRows);
-            startCol = randGen.nextInt(numCols);
-        }
+
 
         this.agentRow = startRow;
         this.agentCol = startCol;
@@ -270,12 +235,22 @@ class WorldDescription {
         return isValid(startRow, startCol) && !isTerminal();
     }
 
-    public boolean isTerminal() {
-        return isTerminal(agentRow, agentCol);
+    
+    private int getPillCount(){
+    	int pillCount=0;
+    	
+    	//über alle Felder iterieren
+    	for(int y=0; y<theMap.length; y++){
+    		for(int x=0; x<theMap[y].length; x++){
+    			if(theMap[y][x] == PacmanEnvironment.WORLD_PILL || theMap[y][x] == PacmanEnvironment.WORLD_POWERPILL)
+    				pillCount++; //Pillen zählen
+    		}
+    	}
+    	return pillCount;
     }
 
-    private boolean isTerminal(int row, int col) {
-        if (theMap[row][col] == SampleMinesEnvironment.WORLD_GOAL || theMap[row][col] == SampleMinesEnvironment.WORLD_MINE) {
+    public boolean isTerminal() {
+    	if(getPillCount() <= 0){
             return true;
         }
         return false;
@@ -284,7 +259,7 @@ class WorldDescription {
     private boolean isValid(int row, int col) {
         boolean valid = false;
         if (row < numRows && row >= 0 && col < numCols && col >= 0) {
-            if (theMap[row][col] != SampleMinesEnvironment.WORLD_OBSTACLE) {
+            if (theMap[row][col] != PacmanEnvironment.WORLD_OBSTACLE) {
                 valid = true;
             }
         }
@@ -296,14 +271,14 @@ class WorldDescription {
      * @return
      */
     public double getReward() {
-        if (theMap[agentRow][agentCol] == SampleMinesEnvironment.WORLD_GOAL) {
+      /*  if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_GOAL) {
             return 10.0f;
         }
 
-        if (theMap[agentRow][agentCol] == SampleMinesEnvironment.WORLD_MINE) {
+        if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_MINE) {
             return -100.0f;
         }
-
+       */
         return -1.0f;
     }
 
@@ -352,16 +327,16 @@ class WorldDescription {
                 if (agentRow == row && agentCol == col) {
                     System.out.printf("A ");
                 } else {
-                    if (theMap[row][col] == SampleMinesEnvironment.WORLD_GOAL) {
+                    if (this.getPillCount() <= 0) {
                         System.out.printf("G ");
                     }
-                    if (theMap[row][col] == SampleMinesEnvironment.WORLD_MINE) {
+                    if (theMap[row][col] == PacmanEnvironment.WORLD_MINE) {
                         System.out.printf("M ");
                     }
-                    if (theMap[row][col] == SampleMinesEnvironment.WORLD_OBSTACLE) {
+                    if (theMap[row][col] == PacmanEnvironment.WORLD_OBSTACLE) {
                         System.out.printf("* ");
                     }
-                    if (theMap[row][col] == SampleMinesEnvironment.WORLD_FREE) {
+                    if (theMap[row][col] == PacmanEnvironment.WORLD_FREE) {
                         System.out.printf("  ");
                     }
                 }

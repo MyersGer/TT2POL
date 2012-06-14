@@ -24,7 +24,7 @@ package experiment;
  * 
  */
 
-import environment.SampleMinesEnvironment;
+import environment.PacmanEnvironment;
 import agent.SampleSarsaAgent;
 
 import org.rlcommunity.rlglue.codec.AgentInterface;
@@ -51,7 +51,7 @@ public class RunMinesSarsaExperiment{
 		//Create an agentLoader that will start the agent when its run method is called
 		AgentLoader theAgentLoader=new AgentLoader(new SampleSarsaAgent());
 		//Create an environmentloader that will start the environment when its run method is called
-		EnvironmentLoader theEnvironmentLoader=new EnvironmentLoader(new SampleMinesEnvironment());
+		EnvironmentLoader theEnvironmentLoader=new EnvironmentLoader(new PacmanEnvironment());
 		
 		//Create threads so that the agent and environment can run asynchronously 		
 		Thread agentThread=new Thread(theAgentLoader);
