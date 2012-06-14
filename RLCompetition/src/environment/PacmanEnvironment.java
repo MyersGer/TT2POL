@@ -16,10 +16,9 @@ public class PacmanEnvironment implements EnvironmentInterface {
 
     static final int WORLD_FREE = 0;
     static final int WORLD_OBSTACLE = 1;
-    static final int WORLD_MINE = 2;
-    static final int WORLD_PILL = 3;
-    static final int WORLD_POWERPILL = 4;
-    static final int WORLD_GHOST = 5;
+    static final int WORLD_PILL = 2;
+    static final int WORLD_POWERPILL = 3;
+    static final int WORLD_GHOST = 4;
 
     //WorldDescription contains the state of the world and manages the dynamics.
     WorldDescription theWorld;
@@ -35,16 +34,16 @@ public class PacmanEnvironment implements EnvironmentInterface {
 
         int world_map[][] = new int[][]{
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 4, 3, 3, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 4, 1},
-            {1, 3, 1, 1, 3, 1, 1, 1, 3, 1, 3, 1, 1, 1, 1, 1, 3, 1},
-            {1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1},
-            {1, 3, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1},
-            {1, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 3, 1, 1, 1, 1, 3, 1},
-            {1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 3, 1},
-            {1, 3, 1, 1, 1, 1, 3, 3, 3, 0, 3, 3, 3, 1, 1, 1, 3, 1},
-            {1, 3, 3, 3, 3, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1, 1, 3, 1},
-            {1, 1, 3, 1, 3, 1, 3, 1, 1, 0, 1, 1, 3, 1, 1, 1, 3, 1},
-            {1, 1, 4, 1, 3, 3, 3, 1, 0, 5, 0, 1, 3, 3, 3, 3, 4, 1},
+            {1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 3, 1},
+            {1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1},
+            {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+            {1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+            {1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
+            {1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
+            {1, 2, 1, 1, 1, 1, 2, 2, 2, 0, 2, 2, 2, 1, 1, 1, 2, 1},
+            {1, 2, 2, 2, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
+            {1, 1, 2, 1, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
+            {1, 1, 3, 1, 2, 2, 2, 1, 0, 4, 0, 1, 2, 2, 2, 2, 3, 1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
 
@@ -330,8 +329,11 @@ class WorldDescription {
                     if (this.getPillCount() <= 0) {
                         System.out.printf("G ");
                     }
-                    if (theMap[row][col] == PacmanEnvironment.WORLD_MINE) {
-                        System.out.printf("M ");
+                    if (theMap[row][col] == PacmanEnvironment.WORLD_PILL) {
+                        System.out.printf("P");
+                    }
+                    if (theMap[row][col] == PacmanEnvironment.WORLD_POWERPILL) {
+                        System.out.printf("PWP ");
                     }
                     if (theMap[row][col] == PacmanEnvironment.WORLD_OBSTACLE) {
                         System.out.printf("* ");
