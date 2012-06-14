@@ -312,6 +312,12 @@ class WorldDescription {
         lastPos.State = ghost.getLastPosState()
         ghost.update();
         */
+        
+        /*prüfen auf pille
+         * wenn neue position == pille
+         * 		entferne pille von karte
+         * 		setze neuepos auf 0 state (nichts mehr auf feld)
+         */
     }
 
     /**
