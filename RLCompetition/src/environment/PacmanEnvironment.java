@@ -306,6 +306,12 @@ class WorldDescription {
             agentRow = newRow;
             agentCol = newCol;
         }
+        
+        /*Geisterupdate Krempel (Skizze) / Pseudocode
+        ghost.getLastPos();
+        lastPos.State = ghost.getLastPosState()
+        ghost.update();
+        */
     }
 
     /**
