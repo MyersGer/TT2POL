@@ -1,4 +1,4 @@
-package agent;
+package examples.mines;
 /*
  * Copyright 2008 Brian Tanner
  * http://rl-glue-ext.googlecode.com/
@@ -47,7 +47,7 @@ their raw form, as structures.  This code could be simplified and you
 could store them just as ints.
  * @author Brian Tanner
  */
-public class SampleSarsaAgent implements AgentInterface {
+public class P4Cm4nAgentFlorian implements AgentInterface {
 
     private Random randGenerator = new Random();
     private Action lastAction;
@@ -181,19 +181,21 @@ public class SampleSarsaAgent implements AgentInterface {
      */
     public String agent_message(String message) {
 
-        if (message.equals("team name")) {
-            return "P4Cm4n";
+        if (message.equals("freeze learning")) {
+            policyFrozen = true;
+            return "message understood, policy frozen";
         }
-        if (message.equals("team members")) {
-            return "Steffen Brauer, Andre Harms, Florian Johannﬂen, Jan-Christoph Meier, Florian Ocker, Olaf Potratz, Torben Woggan";
+        if (message.equals("unfreeze learning")) {
+            policyFrozen = false;
+            return "message understood, policy unfrozen";
         }
-        if (message.equals("training start")) {
-            exploringFrozen = false;
-            return "message understood, training started";
-        }
-        if (message.equals("training end")) {
+        if (message.equals("freeze exploring")) {
             exploringFrozen = true;
-            return "message understood, training end";
+            return "message understood, exploring frozen";
+        }
+        if (message.equals("unfreeze exploring")) {
+            exploringFrozen = false;
+            return "message understood, exploring unfrozen";
         }
         if (message.startsWith("save_policy")) {
             String[] parts = message.split(" ");
@@ -222,6 +224,7 @@ public class SampleSarsaAgent implements AgentInterface {
      * @return
      */
     private int egreedy(int theState) {
+    	
         if (!exploringFrozen) {
             if (randGenerator.nextDouble() <= sarsa_epsilon) {
                 return randGenerator.nextInt(numActions);
@@ -245,7 +248,7 @@ public class SampleSarsaAgent implements AgentInterface {
      * @param args
      */
     public static void main(String[] args) {
-        AgentLoader theLoader = new AgentLoader(new SampleSarsaAgent());
+        AgentLoader theLoader = new AgentLoader(new P4Cm4nAgentFlorian());
         theLoader.run();
     }
 
