@@ -118,7 +118,7 @@ public class SampleExperiment {
         Vector<evaluationPoint> results = new Vector<evaluationPoint>();
         evaluationPoint initialScore = evaluateAgent();
         printScore(0, initialScore);
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 200; i++) {
             for (int j = 0; j < 25; j++) {
                 RLGlue.RL_episode(0);
             }

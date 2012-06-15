@@ -47,7 +47,7 @@ their raw form, as structures.  This code could be simplified and you
 could store them just as ints.
  * @author Brian Tanner
  */
-public class SampleSarsaAgent implements AgentInterface {
+public class P4Cm4nAgentSteffen implements AgentInterface {
 
     private Random randGenerator = new Random();
     private Action lastAction;
@@ -224,6 +224,7 @@ public class SampleSarsaAgent implements AgentInterface {
      * @return
      */
     private int egreedy(int theState) {
+    	
         if (!exploringFrozen) {
             if (randGenerator.nextDouble() <= sarsa_epsilon) {
                 return randGenerator.nextInt(numActions);
@@ -247,7 +248,7 @@ public class SampleSarsaAgent implements AgentInterface {
      * @param args
      */
     public static void main(String[] args) {
-        AgentLoader theLoader = new AgentLoader(new SampleSarsaAgent());
+        AgentLoader theLoader = new AgentLoader(new P4Cm4nAgentSteffen());
         theLoader.run();
     }
 

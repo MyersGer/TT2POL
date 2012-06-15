@@ -43,7 +43,7 @@ public class RunMinesSarsaExperimentNoSockets{
 	
 	public static void main(String[] args){
 		//Create the Agent
-		AgentInterface theAgent=new SampleSarsaAgent();
+		AgentInterface theAgent=new P4Cm4nAgentSteffen();
 		
 		//Create the Environment
 		EnvironmentInterface theEnvironment=new SampleMinesEnvironment();
