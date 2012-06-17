@@ -5,7 +5,6 @@ import java.util.Random;
 /**
  * This class holds all of the internal state information about the environment,
  * and manages the dynamics, state update, reward calculation, etc.
- * @author btanner
  */
 class WorldDescription {
 
@@ -36,8 +35,6 @@ class WorldDescription {
 
         int startRow = randGen.nextInt(numRows);
         int startCol = randGen.nextInt(numCols);
-
-
 
         this.agentRow = startRow;
         this.agentCol = startCol;
@@ -101,15 +98,49 @@ class WorldDescription {
      * @return
      */
     public double getReward() {
-      /*  if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_GOAL) {
-            return 10.0f;
+    	 if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_OBSTACLE) {
+             return -100.0f;
+         }
+    	 
+    	double reward = rewardDistanceToGhost();
+    	
+        if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_PILL) {
+            return reward + 10.0f;
         }
+        
+        if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_POWERPILL) {  
+        	return reward + 20.0f;
+        }
+        
+        if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_FREE) {
+        	return reward + 0f;
+        }
+        
+        // Hier sollte 
+        return -1f;
+    }
 
-        if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_MINE) {
-            return -100.0f;
-        }
-       */
-        return -1.0f;
+    /** Berechnet einen Reward anhand des Abstands zum Geist
+     *  
+     * @param agentRow Aktuelle Zeilen-Position des Agenten
+     * @param agentCol Aktuelle Spalten-Position des Agenten
+     * @return Einen hohen Reward, falls der Abstand groß ist, ansonsten einen niedrigen.
+     */
+    private double rewardDistanceToGhost() { 
+    	int ghostX = 0;
+    	int ghostY = 0;
+    	for(int x = 0; x<numCols; x++) { 
+    		for(int y=0; y<numRows; y++) {
+    			if(theMap[x][y] == PacmanEnvironment.WORLD_GHOST) { 
+    				ghostX = x;
+    				ghostY = y;
+    			}
+    		}
+    	}
+    	double dX =  agentRow - ghostX;
+    	double dY = agentCol - ghostY;
+    	
+    	return Math.sqrt((dX * dX) + (dY * dY)) * 5;
     }
 
     public void updatePosition(int theAction) {
