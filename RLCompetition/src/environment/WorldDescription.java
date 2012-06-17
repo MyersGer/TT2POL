@@ -63,7 +63,7 @@ class WorldDescription {
     }
 
     
-    private int getPillCount(){
+    public int getPillCount(){
     	int pillCount=0;
     	
     	//über alle Felder iterieren
@@ -167,6 +167,14 @@ class WorldDescription {
         if (isValid(newRow, newCol)) {
             agentRow = newRow;
             agentCol = newCol;
+            
+            if(theMap[newRow][newCol] == PacmanEnvironment.WORLD_PILL || 
+            		theMap[newRow][newCol] == PacmanEnvironment.WORLD_POWERPILL) {
+            	
+            	theMap[newRow][newCol] = PacmanEnvironment.WORLD_FREE;
+            	
+            }
+            
         }
         
         /*Geisterupdate Krempel (Skizze) / Pseudocode
@@ -174,16 +182,7 @@ class WorldDescription {
         lastPos.State = ghost.getLastPosState()
         ghost.update();
         */
-        
-        /*prüfen auf pille
-         * wenn neue position == pille
-         * 		entferne pille von karte
-         * 		setze neuepos auf 0 state (nichts mehr auf feld)
-         */
-        if(theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_PILL || 
-        		theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_POWERPILL) {
-        	theMap[agentRow][agentCol] = PacmanEnvironment.WORLD_FREE;
-        }
+      
     }
 
     /**
