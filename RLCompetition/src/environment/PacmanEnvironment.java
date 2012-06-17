@@ -61,7 +61,7 @@ public class PacmanEnvironment implements EnvironmentInterface {
         //Specify that there will be an integer action [0,3]
         theTaskSpecObject.addDiscreteAction(new IntRange(0, 3));
         //Specify the reward range [-100,10]
-        theTaskSpecObject.setRewardRange(new DoubleRange(-100.0d, 10.0d));
+        theTaskSpecObject.setRewardRange(new DoubleRange(-100.0d, 10.0d + (world_map.length * world_map[0].length)));
 
         theTaskSpecObject.setExtra("PacMan");
 
@@ -76,8 +76,8 @@ public class PacmanEnvironment implements EnvironmentInterface {
      * @return
      */
     public Observation env_start() {
-    	theWorld.resetWorld();
     	
+    	theWorld.resetWorld();
         if (fixedStartState) {
             boolean stateIsValid = theWorld.setAgentState(startRow, startCol);
             if (!stateIsValid) {
@@ -104,7 +104,6 @@ public class PacmanEnvironment implements EnvironmentInterface {
         assert (thisAction.getInt(0) < 4) : "Action should be in [0,4], " + thisAction.getInt(0) + " was provided";
 
         theWorld.updatePosition(thisAction.getInt(0));
-
         Observation theObservation = new Observation(1, 0, 0);
         theObservation.setInt(0, theWorld.getState());
         Reward_observation_terminal RewardObs = new Reward_observation_terminal();
