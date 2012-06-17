@@ -131,7 +131,7 @@ class WorldDescription {
     	int ghostY = 0;
     	for(int x = 0; x<numCols; x++) { 
     		for(int y=0; y<numRows; y++) {
-    			if(theMap[x][y] == PacmanEnvironment.WORLD_GHOST) { 
+    			if(theMap[y][x] == PacmanEnvironment.WORLD_GHOST) { 
     				ghostX = x;
     				ghostY = y;
     			}
