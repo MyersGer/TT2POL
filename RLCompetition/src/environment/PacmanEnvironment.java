@@ -20,10 +20,10 @@ public class PacmanEnvironment implements EnvironmentInterface {
     static final int WORLD_POWERPILL = 3;
     static final int WORLD_GHOST = 4;
 
-    //WorldDescription contains the state of the world and manages the dynamics.
+    //WorldDescription contains the state of the world and manages the dynamics
     WorldDescription theWorld;
-    //These are used if the environment has been sent a message to use a fixed
-    //starting state.
+    
+    //These are used if the environment has been sent a message to use a fixed starting state.
     boolean fixedStartState = false;
     int startRow = 0;
     int startCol = 0;
@@ -31,7 +31,6 @@ public class PacmanEnvironment implements EnvironmentInterface {
     public String env_init() {
         //This is hard coded, but there is no reason it couldn't be automatically
         //generated or read from a file.
-
         int world_map[][] = new int[][]{
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 3, 1},
@@ -47,9 +46,7 @@ public class PacmanEnvironment implements EnvironmentInterface {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
 
-
         theWorld = new WorldDescription(world_map);
-
 
         //Create a task spec programmatically.  This task spec encodes that state, action, and reward space for the problem.
         //You could forgo the task spec if your agent and environment have been created specifically to work with each other
@@ -171,13 +168,6 @@ public class PacmanEnvironment implements EnvironmentInterface {
         theLoader.run();
     }
 }
-
-
-
-
-
-
-
 
 /**
  * This class holds all of the internal state information about the environment,
