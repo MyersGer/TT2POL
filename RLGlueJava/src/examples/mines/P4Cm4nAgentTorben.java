@@ -39,7 +39,7 @@ import org.rlcommunity.rlglue.codec.util.AgentLoader;
 import org.rlcommunity.rlglue.codec.taskspec.TaskSpec;
 
 /**
-This is a very simple Sarsa agent for discrete-action, discrete-state
+This is a very simple Q-Learning agent for discrete-action, discrete-state
 environments.  It uses epsilon-greedy exploration.
 
 We've made a decision to store the previous action and observation in
@@ -53,9 +53,9 @@ public class P4Cm4nAgentTorben implements AgentInterface {
     private Action lastAction;
     private Observation lastObservation;
     private double[][] valueFunction = null;
-    private double sarsa_stepsize = 0.1;
+    private double qlearning_stepsize = 0.1;
     private double sarsa_epsilon = 0.1;
-    private double sarsa_gamma = 1.0;
+    private double qlearning_gamma = 1.0;
     private int numActions = 0;
     private int numStates = 0;
     private boolean policyFrozen = false;
@@ -83,7 +83,7 @@ public class P4Cm4nAgentTorben implements AgentInterface {
         assert (!theTaskSpec.getDiscreteActionRange(0).hasSpecialMaxStatus());
         numActions = theTaskSpec.getDiscreteActionRange(0).getMax() + 1;
 
-        sarsa_gamma=theTaskSpec.getDiscountFactor();
+        qlearning_gamma=theTaskSpec.getDiscountFactor();
 
         valueFunction = new double[numActions][numStates];
 
@@ -96,6 +96,7 @@ public class P4Cm4nAgentTorben implements AgentInterface {
      * @return
      */
     public Action agent_start(Observation observation) {
+    	// Choose a from s using policy derived from Q (e.g., e-greedy)
         int newActionInt = egreedy(observation.getInt(0));
 
         /**
@@ -119,27 +120,43 @@ public class P4Cm4nAgentTorben implements AgentInterface {
      * @param observation
      * @return
      */
-    public Action agent_step(double reward, Observation observation) {
+    public Action agent_step(double reward, Observation observation) {    	
+    	// s'
         int newStateInt = observation.getInt(0);
+        // s
         int lastStateInt = lastObservation.getInt(0);
+        // a
         int lastActionInt = lastAction.getInt(0);
 
-        int newActionInt = egreedy(newStateInt);
-
+        // Q(s,a)
         double Q_sa = valueFunction[lastActionInt][lastStateInt];
-        double Q_sprime_aprime = valueFunction[newActionInt][newStateInt];
+        
+        // max_a'_Q(s',a') -> für maximales a' den Q-Wert
+        double Q_sprime_aprime = 0;
+        for (int a = 0; a < numActions; a++) {
+        	double current = valueFunction[a][newStateInt];
+        	if (current > Q_sprime_aprime) Q_sprime_aprime = current;
+        }
 
-        double new_Q_sa = Q_sa + sarsa_stepsize * (reward + sarsa_gamma * Q_sprime_aprime - Q_sa);
+        // Q-Learning:
+        // Q(s,a) <- Q(s,a) + alpha[r + gamma * max_a'_Q(s',a') - Q(s,a)]
+        double new_Q_sa = Q_sa + qlearning_stepsize * (reward + qlearning_gamma * Q_sprime_aprime - Q_sa);
+                
         /*	Only update the value function if the policy is not frozen */
         if (!policyFrozen) {
             valueFunction[lastActionInt][lastStateInt] = new_Q_sa;
         }
+        
+        // Choose a' from s' using policy derived from Q (e.g., e-greedy)
+        int newActionInt = egreedy(newStateInt);
 
         /* Creating the action a different way to showcase variety */
         Action returnAction = new Action();
         returnAction.intArray = new int[]{newActionInt};
 
+        // a <- a'
         lastAction = returnAction.duplicate();
+        // s <- s'
         lastObservation = observation.duplicate();
 
         return returnAction;
@@ -154,7 +171,7 @@ public class P4Cm4nAgentTorben implements AgentInterface {
         int lastActionInt = lastAction.getInt(0);
 
         double Q_sa = valueFunction[lastActionInt][lastStateInt];
-        double new_Q_sa = Q_sa + sarsa_stepsize * (reward - Q_sa);
+        double new_Q_sa = Q_sa + qlearning_stepsize * (reward - Q_sa);
 
         /*	Only update the value function if the policy is not frozen */
         if (!policyFrozen) {
@@ -180,6 +197,22 @@ public class P4Cm4nAgentTorben implements AgentInterface {
      * @return
      */
     public String agent_message(String message) {
+    	// Anfang spezifizierte Messages
+    	if (message.equals("team name")) {
+            return "P4Cm4n";
+        }
+        if (message.equals("team members")) {
+            return "Steffen Brauer, Andre Harms, Florian Johannßen, Jan-Christoph Meier, Florian Ocker, Olaf Potratz, Torben Woggan";
+        }
+        if (message.equals("training start")) {
+            exploringFrozen = false;
+            return "message understood, training started";
+        }
+        if (message.equals("training end")) {
+            exploringFrozen = true;
+            return "message understood, training end";
+        }
+        // Ende spezifizierte Messages
 
         if (message.equals("freeze learning")) {
             policyFrozen = true;
