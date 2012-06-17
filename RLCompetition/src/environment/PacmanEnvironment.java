@@ -76,6 +76,8 @@ public class PacmanEnvironment implements EnvironmentInterface {
      * @return
      */
     public Observation env_start() {
+    	theWorld.resetWorld();
+    	
         if (fixedStartState) {
             boolean stateIsValid = theWorld.setAgentState(startRow, startCol);
             if (!stateIsValid) {
@@ -102,7 +104,6 @@ public class PacmanEnvironment implements EnvironmentInterface {
         assert (thisAction.getInt(0) < 4) : "Action should be in [0,4], " + thisAction.getInt(0) + " was provided";
 
         theWorld.updatePosition(thisAction.getInt(0));
-
 
         Observation theObservation = new Observation(1, 0, 0);
         theObservation.setInt(0, theWorld.getState());

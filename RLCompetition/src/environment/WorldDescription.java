@@ -12,7 +12,7 @@ class WorldDescription {
     private final int numCols;
     public int agentRow;
     public int agentCol;
-    private final int[][] theMap;
+    private int[][] theMap;
     private Random randGen = new Random();
 
     public WorldDescription(int[][] worldMap) {
@@ -180,6 +180,10 @@ class WorldDescription {
          * 		entferne pille von karte
          * 		setze neuepos auf 0 state (nichts mehr auf feld)
          */
+        if(theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_PILL || 
+        		theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_POWERPILL) {
+        	theMap[agentRow][agentCol] = PacmanEnvironment.WORLD_FREE;
+        }
     }
 
     /**
@@ -219,5 +223,25 @@ class WorldDescription {
             }
         }
         System.out.printf("\n");
+    }
+    
+    /** Die Map muss nach jeder Episode neu initialisiert werden,
+     *  da der Junky die ganzen Pillen aufgefressen hat.
+     */
+    public void resetWorld() {
+    	theMap = new int[][]{
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 3, 1},
+                {1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
+                {1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
+                {1, 2, 1, 1, 1, 1, 2, 2, 2, 0, 2, 2, 2, 1, 1, 1, 2, 1},
+                {1, 2, 2, 2, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
+                {1, 1, 2, 1, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
+                {1, 1, 3, 1, 2, 2, 2, 1, 0, 4, 0, 1, 2, 2, 2, 2, 3, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+            };
     }
 }
