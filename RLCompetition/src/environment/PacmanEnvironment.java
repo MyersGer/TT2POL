@@ -66,7 +66,7 @@ public class PacmanEnvironment implements EnvironmentInterface {
         //Specify the reward range [-100,10]
         theTaskSpecObject.setRewardRange(new DoubleRange(-100.0d, 10.0d));
 
-        theTaskSpecObject.setExtra("SampleMinesEnvironment(Java) by Brian Tanner.");
+        theTaskSpecObject.setExtra("PacMan");
 
         String taskSpecString = theTaskSpecObject.toTaskSpec();
         TaskSpec.checkTaskSpec(taskSpecString);
@@ -150,8 +150,16 @@ public class PacmanEnvironment implements EnvironmentInterface {
 			theWorld.print_state();
 			return "Message understood.  Printed the state.";
         }
-
-        return "SamplesMinesEnvironment(Java) does not understand your message.";
+		
+		if(message.startsWith("team name")) {
+			return "Fantastic Seven";
+		}
+		
+		if(message.startsWith("team members")) {
+			return "Steffen Brauer,André Harms,Florian Johannßen,Jan-Christoph Meier,Florian Ocker,Olaf Potratz,Torben Woggan";			
+		}
+		
+        return "PacMan does not understand your message.";
     }
 
     /**
