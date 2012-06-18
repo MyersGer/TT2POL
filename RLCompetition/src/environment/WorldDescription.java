@@ -13,11 +13,17 @@ class WorldDescription {
     public int agentRow;
     public int agentCol;
     private int[][] theMap;
+    
+    private int[][] originalMap;
     private Random randGen = new Random();
 
+    private int num_steps = 0;
+    
+    
+    
     public WorldDescription(int[][] worldMap) {
         this.theMap = worldMap;
-
+        this.originalMap = worldMap.clone();
         this.numRows = theMap.length;
         this.numCols = theMap[0].length;
     }
@@ -77,6 +83,7 @@ class WorldDescription {
     }
 
     public boolean isTerminal() {
+    	//if(num_steps > 500) return true;
     	if(getPillCount() <= 0){
             return true;
         }
@@ -98,11 +105,12 @@ class WorldDescription {
      * @return
      */
     public double getReward() {
+    	 num_steps++;
     	 if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_OBSTACLE) {
              return -100.0f;
          }
     	 
-    	double reward = rewardDistanceToGhost();
+    	double reward = 0;//rewardDistanceToGhost();
     	
         if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_PILL) {
             return reward + 10.0f;
@@ -113,10 +121,9 @@ class WorldDescription {
         }
         
         if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_FREE) {
-        	return reward + 0f;
+        	return reward - 1f;
         }
         
-        // Hier sollte 
         return -1f;
     }
 
@@ -147,7 +154,8 @@ class WorldDescription {
         /* When the move would result in hitting an obstacles, the agent simply doesn't move */
         int newRow = agentRow;
         int newCol = agentCol;
-
+        //System.out.println("pillcount: " + getPillCount());
+        //System.out.println("y=" + agentRow + " x=" + agentCol);
 
         if (theAction == 0) {/*move down*/
             newCol = agentCol - 1;
@@ -192,20 +200,20 @@ class WorldDescription {
         System.out.printf("Agent is at: %d,%d\n", agentRow, agentCol);
         System.out.printf("Columns:0-10                10-17\n");
         System.out.printf("Col    ");
-        for (int col = 0; col < 18; col++) {
+        for (int col = 0; col < numCols; col++) {
             System.out.printf("%d ", col % 10);
         }
 
-        for (int row = 0; row < 6; row++) {
+        for (int row = 0; row < numRows; row++) {
             System.out.printf("\nRow: %d ", row);
 
-            for (int col = 0; col < 18; col++) {
+            for (int col = 0; col < numCols; col++) {
                 if (agentRow == row && agentCol == col) {
                     System.out.printf("A ");
                 } else {
-                    if (this.getPillCount() <= 0) {
+                    /*if (this.getPillCount() <= 0) {
                         System.out.printf("G ");
-                    }
+                    }*/
                     if (theMap[row][col] == PacmanEnvironment.WORLD_PILL) {
                         System.out.printf("P");
                     }
@@ -228,19 +236,6 @@ class WorldDescription {
      *  da der Junky die ganzen Pillen aufgefressen hat.
      */
     public void resetWorld() {
-    	theMap = new int[][]{
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 3, 1},
-                {1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1},
-                {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
-                {1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
-                {1, 2, 1, 1, 1, 1, 2, 2, 2, 0, 2, 2, 2, 1, 1, 1, 2, 1},
-                {1, 2, 2, 2, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
-                {1, 1, 2, 1, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
-                {1, 1, 3, 1, 2, 2, 2, 1, 0, 4, 0, 1, 2, 2, 2, 2, 3, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-            };
+    	theMap = originalMap.clone();
     }
 }
