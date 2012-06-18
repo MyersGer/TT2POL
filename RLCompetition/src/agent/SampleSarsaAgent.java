@@ -181,21 +181,19 @@ public class SampleSarsaAgent implements AgentInterface {
      */
     public String agent_message(String message) {
 
-        if (message.equals("freeze learning")) {
-            policyFrozen = true;
-            return "message understood, policy frozen";
+        if (message.equals("team name")) {
+            return "P4Cm4n";
         }
-        if (message.equals("unfreeze learning")) {
-            policyFrozen = false;
-            return "message understood, policy unfrozen";
+        if (message.equals("team members")) {
+            return "Steffen Brauer, Andre Harms, Florian Johannﬂen, Jan-Christoph Meier, Florian Ocker, Olaf Potratz, Torben Woggan";
         }
-        if (message.equals("freeze exploring")) {
-            exploringFrozen = true;
-            return "message understood, exploring frozen";
-        }
-        if (message.equals("unfreeze exploring")) {
+        if (message.equals("training start")) {
             exploringFrozen = false;
-            return "message understood, exploring unfrozen";
+            return "message understood, training started";
+        }
+        if (message.equals("training end")) {
+            exploringFrozen = true;
+            return "message understood, training end";
         }
         if (message.startsWith("save_policy")) {
             String[] parts = message.split(" ");

@@ -96,7 +96,7 @@ public class SampleExperiment {
         for (i = 0; i < n; i++) {
             /* We use a cutoff here in case the policy is bad
             and will never end an episode */
-            RLGlue.RL_episode(5000);
+            RLGlue.RL_episode(50);
             this_return = RLGlue.RL_return();
             sum += this_return;
             sum_of_squares += this_return * this_return;
@@ -118,9 +118,9 @@ public class SampleExperiment {
         Vector<evaluationPoint> results = new Vector<evaluationPoint>();
         evaluationPoint initialScore = evaluateAgent();
         printScore(0, initialScore);
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 25; j++) {
-                RLGlue.RL_episode(0);
+        for (int i = 0; i < 2000; i++) {
+            for (int j = 0; j < 2500; j++) {
+                RLGlue.RL_episode(50000);
             }
             evaluationPoint currentScore = evaluateAgent();
             printScore((i + 1) * 25, currentScore);
