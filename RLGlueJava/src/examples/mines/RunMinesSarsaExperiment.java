@@ -46,8 +46,9 @@ public class RunMinesSarsaExperiment{
 	
 	public static void main(String[] args){
 		//Create an agentLoader that will start the agent when its run method is called
+		AgentLoader theAgentLoader=new AgentLoader(new SampleSarsaAgent());
 		//AgentLoader theAgentLoader=new AgentLoader(new P4Cm4nAgentTorben());
-		AgentLoader theAgentLoader=new AgentLoader(new P4Cm4nAgentSteffen());
+		//AgentLoader theAgentLoader=new AgentLoader(new P4Cm4nAgentSteffen());
 		//Create an environmentloader that will start the environment when its run method is called
 		EnvironmentLoader theEnvironmentLoader=new EnvironmentLoader(new SampleMinesEnvironment());
 		
