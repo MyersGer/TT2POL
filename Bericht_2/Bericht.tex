@@ -61,6 +61,16 @@
 \section{Frage}
 
 \section{Frage}
+Warum nähert sicher das vom On-Policy-Verfahren SARSA erzeugte Verhalten dem des Off-Policy-Verfahrens Q-Learning bei kleinem Epsilon an?
+
+Die Güte eines Zustands wird bei beiden Verfahren durch die Aktions-Wertfunktion Q bestimmt. Nach jedem Aktions-Schritt wird diese entsprechend der gemachten Erfahrungen angepasst. Bei der Berechnung von Q fließt bei Sarsa anteilig (in abgeschwächter Form) die Erfahrung der Folgeaktion mit ein. Es wird also ein Schritt in die Zukunft geschaut und dort eine Aktion gemäß Strategie gewählt. Der Gewinn eben dieser Folgeaktion hat also Einfluss auf die Bewertung der vorangegangenen Aktion, welche in diesen Zustand führen wird. 
+
+Während der Lernphase der Verfahren verfolgen diese in der Regel eine Epsilon-Greedy-Strategie. Diese Strategie wählt immer die, bezüglich des Gewinns, beste Aktion aus, hat jedoch eine Wahrscheinlichkeit Epsilon mit der sie eine zufällig andere Aktion auswählt. Diesen Experimentiervorgang nennt man Explorieren, da nun alternative Möglichkeiten ausprobiert werden. Bei einem hohen Epsilon-Wert exploriert ein Agent entsprechend häufiger, typisch ist jedoch ein konstanter, kleiner Wert (z.B. Epsilon = 0,1).
+Da SARSA beim Bewerten von Q auch die Folgeaktion einbezieht (dies nennt man On-Policy), kann durch eine explorative Folgeaktionen, die einen schlechten Gewinn zur Folge hat, die ursprüngliche Aktion schlecht bewertet werden. Diese Aktion muss jedoch für die Zielereichung nicht ungünstig sein (und ist es häufig auch nicht), sie bietet möglichweise nur die Option auf eine schlechte Aktion. Folgendes Beispiel veranschaulicht dieses Phänomen. Angenommen ein Agent muss eine Hängebrücke überqueren, um ein Ziel zu erreichen. Jedoch besteht die Möglichkeit bei einer wenig sinnvollen Aktion von der Brücke zu fallen, was eine extrem negative Bewertung zur Folge hätte. Durch den Explorationsmechanismus würde der Agent dies von Zeit zur Zeit tun. Dadurch würde aber die Aktion, welche zum Betreten der Brücke führt, ebenfalls schlecht bewertet werden. Dieser Algorithmus führt letztendlich dazu, dass der Agent einen möglichst "sicheren" Weg wählt bei dem keine negativen Aktionen zu erwarten sind.
+
+Q-Learning benutzt das Off-Policy-Verfahren, was bedeutet, dass für die Auswahl und für die Bewertung einer Aktion unterschiedliche Strategien zum Einsatz kommen. Die Wahl der Aktion erfolgt auch hier Epsilon-Greedy. Bei der anteiligen Einbeziehung der Erfahrungen durch die Folgeaktion wird jedoch immer die beste Aktion gewählt, selbst wenn dort möglicherweise anschließend exploriert werden sollte. Die tatsächliche Folgeaktion hat also keinen Einfluss auf die Bewertung der ersten Aktion, sondern lediglich die Güte des Folgezustands.
+
+Wird nun ein sehr kleines Epsilon gewählt, so wird auch seltener Exploriert. Dadurch ist die Folgeaktion auch häufiger die beste wählbare Aktion (gemäß ihres Erwartungswerts). Der Unterschied in den Bewertungsverfahren wird dementsprechend geringer und die beiden Verfahren nähern sich in ihrem Verhalten an.
 
 \section{Frage}
 Wie geht man vor, wenn die Zustandsvariablen, die einen Zustand beschreiben kontinuierlich sind? Wie geht man vor, wenn der Zustandsraum so groß ist, dass der Speicher nicht reicht, um alle V-Werte vzw. Q-Werte abzuspeichern.
