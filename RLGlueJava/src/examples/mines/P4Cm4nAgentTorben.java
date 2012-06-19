@@ -54,7 +54,7 @@ public class P4Cm4nAgentTorben implements AgentInterface {
     private Observation lastObservation;
     private double[][] valueFunction = null;
     private double qlearning_stepsize = 0.1;
-    private double sarsa_epsilon = 0.1;
+    private double qlearning_epsilon = 0.1;
     private double qlearning_gamma = 1.0;
     private int numActions = 0;
     private int numStates = 0;
@@ -131,7 +131,7 @@ public class P4Cm4nAgentTorben implements AgentInterface {
         // Q(s,a)
         double Q_sa = valueFunction[lastActionInt][lastStateInt];
         
-        // max_a'_Q(s',a') -> f¸r maximales a' den Q-Wert
+        // max_a'_Q(s',a') -> f√ºr maximales a' den Q-Wert
         double Q_sprime_aprime = 0;
         for (int a = 0; a < numActions; a++) {
         	double current = valueFunction[a][newStateInt];
@@ -202,7 +202,7 @@ public class P4Cm4nAgentTorben implements AgentInterface {
             return "P4Cm4n";
         }
         if (message.equals("team members")) {
-            return "Steffen Brauer, Andre Harms, Florian Johannﬂen, Jan-Christoph Meier, Florian Ocker, Olaf Potratz, Torben Woggan";
+            return "Steffen Brauer, Andre Harms, Florian Johann√üen, Jan-Christoph Meier, Florian Ocker, Olaf Potratz, Torben Woggan";
         }
         if (message.equals("training start")) {
             exploringFrozen = false;
@@ -259,7 +259,7 @@ public class P4Cm4nAgentTorben implements AgentInterface {
     private int egreedy(int theState) {
     	
         if (!exploringFrozen) {
-            if (randGenerator.nextDouble() <= sarsa_epsilon) {
+            if (randGenerator.nextDouble() <= qlearning_epsilon) {
                 return randGenerator.nextInt(numActions);
             }
         }
