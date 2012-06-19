@@ -206,10 +206,12 @@ public class P4Cm4nAgentTorben implements AgentInterface {
         }
         if (message.equals("training start")) {
             exploringFrozen = false;
+            policyFrozen = false;
             return "message understood, training started";
         }
-        if (message.equals("training end")) {
+        if (message.equals("training end")) {        	
             exploringFrozen = true;
+            policyFrozen = true;
             return "message understood, training end";
         }
         // Ende spezifizierte Messages
