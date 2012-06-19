@@ -1,4 +1,4 @@
-package examples.mines;
+package agent;
 /*
  * Copyright 2008 Brian Tanner
  * http://rl-glue-ext.googlecode.com/
@@ -47,7 +47,7 @@ their raw form, as structures.  This code could be simplified and you
 could store them just as ints.
  * @author Brian Tanner
  */
-public class P4Cm4nAgentTorben implements AgentInterface {
+public class P4Cm4nAgent implements AgentInterface {
 
     private Random randGenerator = new Random();
     private Action lastAction;
@@ -209,7 +209,7 @@ public class P4Cm4nAgentTorben implements AgentInterface {
             policyFrozen = false;
             return "message understood, training started";
         }
-        if (message.equals("training end")) {        	
+        if (message.equals("training end")) {
             exploringFrozen = true;
             policyFrozen = true;
             return "message understood, training end";
@@ -283,7 +283,7 @@ public class P4Cm4nAgentTorben implements AgentInterface {
      * @param args
      */
     public static void main(String[] args) {
-        AgentLoader theLoader = new AgentLoader(new P4Cm4nAgentTorben());
+        AgentLoader theLoader = new AgentLoader(new P4Cm4nAgent());
         theLoader.run();
     }
 

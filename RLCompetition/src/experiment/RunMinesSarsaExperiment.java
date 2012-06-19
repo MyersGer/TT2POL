@@ -25,6 +25,7 @@ package experiment;
  */
 
 import environment.PacmanEnvironment;
+import agent.P4Cm4nAgent;
 import agent.SampleSarsaAgent;
 
 import org.rlcommunity.rlglue.codec.AgentInterface;
@@ -49,7 +50,8 @@ public class RunMinesSarsaExperiment{
 	
 	public static void main(String[] args){
 		//Create an agentLoader that will start the agent when its run method is called
-		AgentLoader theAgentLoader=new AgentLoader(new SampleSarsaAgent());
+		//AgentLoader theAgentLoader=new AgentLoader(new SampleSarsaAgent());
+		AgentLoader theAgentLoader=new AgentLoader(new P4Cm4nAgent());
 		//Create an environmentloader that will start the environment when its run method is called
 		EnvironmentLoader theEnvironmentLoader=new EnvironmentLoader(new PacmanEnvironment());
 		
