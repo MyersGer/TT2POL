@@ -119,9 +119,9 @@ public class SampleExperiment {
         evaluationPoint initialScore = evaluateAgent();
         printScore(0, initialScore);
         for (int i = 0; i < 200; i++) {
-            //for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 5; j++) {
                 RLGlue.RL_episode(1000);
-            //}
+            }
             evaluationPoint currentScore = evaluateAgent();
             printScore((i + 1) * 25, currentScore);
             results.add(currentScore);
