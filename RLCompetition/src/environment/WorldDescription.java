@@ -159,6 +159,12 @@ class WorldDescription implements IWorld {
     }
 
     public void updatePosition(int theAction) {
+    	/*try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
         /* When the move would result in hitting an obstacles, the agent simply doesn't move */
         int newRow = agentRow;
         int newCol = agentCol;
@@ -166,16 +172,16 @@ class WorldDescription implements IWorld {
         //System.out.println("y=" + agentRow + " x=" + agentCol);
 
         if (theAction == 0) {/*move down*/
-            newCol = agentCol - 1;
-        }
-        if (theAction == 1) { /*move up*/
-            newCol = agentCol + 1;
-        }
-        if (theAction == 2) {/*move left*/
             newRow = agentRow - 1;
         }
-        if (theAction == 3) {/*move right*/
+        if (theAction == 1) { /*move up*/
             newRow = agentRow + 1;
+        }
+        if (theAction == 2) {/*move left*/
+            newCol = agentCol - 1;
+        }
+        if (theAction == 3) {/*move right*/
+            newCol = agentCol + 1;
         }
 
 
@@ -258,7 +264,7 @@ class WorldDescription implements IWorld {
  */
 @Override
 public boolean isMitPacMan(int x, int y){
-    	if(agentCol == y && agentRow == x){
+    	if(agentCol == x && agentRow == y){
     		return true;
     	}
     	return false;
