@@ -167,4 +167,10 @@ public class PacmanEnvironment implements EnvironmentInterface {
         EnvironmentLoader theLoader = new EnvironmentLoader(new PacmanEnvironment());
         theLoader.run();
     }
+
+	public WorldDescription getTheWorld() {
+		return theWorld;
+	}
+    
+    
 }

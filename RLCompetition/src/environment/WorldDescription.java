@@ -32,6 +32,14 @@ class WorldDescription {
         return numRows * numCols;
     }
     
+    
+    public int getMapSizeX(){
+    	return numRows;
+    }
+    
+    public int getMapSizeY(){
+    	return numCols;
+    }
 
     /**
      * Puts the agent into a random state.  Uses a generate and test method, in
