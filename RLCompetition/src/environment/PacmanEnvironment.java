@@ -185,5 +185,5 @@ public class PacmanEnvironment implements EnvironmentInterface {
 		return theWorld;
 	}
     
-    
+
 }

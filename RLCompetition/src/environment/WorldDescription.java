@@ -246,4 +246,8 @@ class WorldDescription {
     public void resetWorld() {
     	theMap = originalMap.clone();
     }
+    
+    public int getWorldTile(int x, int y){
+    	return theMap[y][x];
+    }
 }

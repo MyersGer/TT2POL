@@ -2,6 +2,8 @@ package environment;
 
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 
+import sun.awt.windows.ThemeReader;
+
 import jgame.*;
 import jgame.platform.*;
 
@@ -91,7 +93,7 @@ public class Gui extends JGEngine {
 		
 		for (int i=0; i<world.getMapSizeY(); i++){
 			for (int j=0; j<world.getMapSizeX(); j++){
-				new TileView(j,i);
+				new TileView(j,i, world.getWorldTile(j, i));
 			}
 		}
 			
@@ -132,11 +134,17 @@ public class Gui extends JGEngine {
 	
 	class TileView extends JGObject {
 		
+		int tileCode;
 
 		/** Constructor. */
-		TileView (int x, int y) {
+		TileView (int x, int y, int tileCode) {
 			// Initialise game object by calling an appropriate constructor
 			// in the JGObject class.
+			
+			
+			
+			
+			
 			super(
 				"tileView",// name by which the object is known
 				true,//true means add a unique ID number after the object name.
@@ -148,6 +156,10 @@ public class Gui extends JGEngine {
 				   // of objects should collide with each other)
 				null // name of sprite or animation to use (null is none)
 			);
+			
+			
+			this.tileCode = tileCode;
+			
 			// Give the object an initial speed in a random direction.
 			xspeed = 0;
 			yspeed = 0;
@@ -171,6 +183,27 @@ public class Gui extends JGEngine {
 			setColor(JGColor.yellow);
 //			drawOval(x,y,16,16,true,true);
 //			drawCarW();
+			
+			
+			
+			switch (tileCode) {
+
+			case PacmanEnvironment.WORLD_FREE:
+				drawFeld();break;
+			case PacmanEnvironment.WORLD_OBSTACLE:
+				drawWand();break;
+			case PacmanEnvironment.WORLD_PILL:
+				drawFeldMitPill();break;
+			case PacmanEnvironment.WORLD_POWERPILL:
+				drawFeldMitPowerPill();break;
+			case PacmanEnvironment.WORLD_GHOST:
+				break;
+
+			default:
+				break;
+			}
+			
+			
 		}
 		
 		
@@ -185,14 +218,25 @@ public class Gui extends JGEngine {
 			drawRect(x, y, tileSize, tileSize, true, false);
 		}
 		
-		private void drawFeldMitCoin(){
+		private void drawFeldMitPill(){
 			setColor(JGColor.black);
 			drawRect(x, y, tileSize, tileSize, true, false);
+			setColor(JGColor.red);
+			drawOval(x, y, tileSize / 4, tileSize / 4, true, true);
+		}
+		
+		private void drawFeldMitPowerPill(){
+			setColor(JGColor.black);
+			drawRect(x, y, tileSize, tileSize, true, false);
+			setColor(JGColor.red);
+			drawOval(x, y, tileSize / 3, tileSize / 3, true, true);
 		}
 		
 		private void drawPacMan(){
 			setColor(JGColor.black);
 			drawRect(x, y, tileSize, tileSize, true, false);
+			setColor(JGColor.yellow);
+			drawOval(x, y, tileSize / 2, tileSize / 2, true, true);
 		}
 		
 		
