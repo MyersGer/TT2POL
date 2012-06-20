@@ -44,8 +44,16 @@ class WorldDescription implements IWorld {
         this.resetWorld();
     }
 
-    public int getNumStates() {
-        return numRows * numCols;
+    public int getNumStates() {  
+      /**
+       * da alle Kombinationen von Feldern mit Pille und ohne theoretisch möglich sind
+       * vergrößert sich der Zustandsraum mit der Fakultät der Positions-Zustände
+       */
+      int numState =  getPosStates();
+      for (int i = 0; i < pillStates.size(); i++) {
+        numState += getPosStates() * (i + 1);
+      }
+      return numState; 
     }
     
     
