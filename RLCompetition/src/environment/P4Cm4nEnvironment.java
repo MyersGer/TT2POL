@@ -58,8 +58,6 @@ public class P4Cm4nEnvironment implements EnvironmentInterface {
     public String env_init() {
         //This is hard coded, but there is no reason it couldn't be automatically
         //generated or read from a file.
-
-
         //Create a task spec programmatically.  This task spec encodes that state, action, and reward space for the problem.
         //You could forgo the task spec if your agent and environment have been created specifically to work with each other
         //ie, there is no need to share this information at run time.  You could also use your own ad-hoc task specification language,

@@ -116,7 +116,7 @@ class WorldDescription implements IWorld {
     public double getReward() {
     	 num_steps++;
     	 if (theMap[agentRow][agentCol] == P4Cm4nEnvironment.WORLD_OBSTACLE) {
-             return -100.0f;
+             return -5.0f;
          }
     	 
     	double reward = 0;//rewardDistanceToGhost();
