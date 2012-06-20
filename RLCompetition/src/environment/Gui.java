@@ -9,10 +9,13 @@ public class Gui extends JGEngine {
 	
 	static JGColor gray = new JGColor(133, 133, 133);
 	
-	int sizeX = 10;
-	int sizeY = 10;
-	int tileSize = 64;
+//	int sizeX = 10;
+//	int sizeY = 10;
+	int tileSize = 16;
 	WorldDescription world;
+	
+	int screenX = 640;
+	int screenY = 480;
 
 	public static void main(String [] args) {
 		// We start the engine with a fixed window size (which happens to
@@ -20,8 +23,8 @@ public class Gui extends JGEngine {
 		// by a factor 2).  Normally, you'd want this size to be configurable,
 		// for example by means of command line parameters.
 		PacmanEnvironment pe = new PacmanEnvironment();
-		new Gui(pe);
         EnvironmentLoader theLoader = new EnvironmentLoader(pe);
+        new Gui(pe);
         theLoader.run();
 	}
 
@@ -36,7 +39,7 @@ public class Gui extends JGEngine {
 	public Gui(PacmanEnvironment pe) {
 		this.world = pe.getTheWorld();
 		// This inits the engine as an application.
-		initEngine(world.getMapSizeX(), world.getMapSizeY()); 
+		initEngine(screenX, screenY); 
 	}
 
 	/** This method is called by the engine when it is ready to intialise the
@@ -55,8 +58,8 @@ public class Gui extends JGEngine {
 		
 		
 		setCanvasSettings(
-			sizeX,  // width of the canvas in tiles
-			sizeY,  // height of the canvas in tiles
+			world.getMapSizeX(),  // width of the canvas in tiles
+			world.getMapSizeY(),  // height of the canvas in tiles
 			tileSize,  // width of one tile
 			tileSize,  // height of one tile
 			     //    (note: total size = 20*16=320  x  15*16=240)
@@ -86,8 +89,8 @@ public class Gui extends JGEngine {
 		);
 		
 		
-		for (int i=0; i<sizeY; i++){
-			for (int j=0; j<sizeX; j++){
+		for (int i=0; i<world.getMapSizeY(); i++){
+			for (int j=0; j<world.getMapSizeX(); j++){
 				new TileView(j,i);
 			}
 		}
@@ -167,42 +170,66 @@ public class Gui extends JGEngine {
 			// Draw a yellow ball
 			setColor(JGColor.yellow);
 //			drawOval(x,y,16,16,true,true);
-			drawCarW();
+//			drawCarW();
 		}
 		
-		private void drawGebaeude(){
+		
+		private void drawWand(){
+			setColor(gray);
+			drawRect(x, y, tileSize, tileSize, true, false);
+		}
+		
+		
+		private void drawFeld(){
 			setColor(JGColor.black);
 			drawRect(x, y, tileSize, tileSize, true, false);
 		}
 		
-		private void drawStrasseS(){
-			drawGebaeude();
-			setColor(gray);
-			drawRect(x+12, y, 40, tileSize, true, false);
+		private void drawFeldMitCoin(){
+			setColor(JGColor.black);
+			drawRect(x, y, tileSize, tileSize, true, false);
 		}
 		
-		private void drawStrasseW(){
-			drawGebaeude();
-			setColor(gray);
-			drawRect(x, y+12, tileSize, 40, true, false);
+		private void drawPacMan(){
+			setColor(JGColor.black);
+			drawRect(x, y, tileSize, tileSize, true, false);
 		}
 		
-		private void drawKreuzung(){
-			drawGebaeude();
-			setColor(gray);
-			drawRect(x+12, y, 40, tileSize, true, false);
-			drawRect(x, y+12, tileSize, 40, true, false);
-		}
 		
-		private void drawCarS(){
-			setColor(JGColor.cyan);
-			drawRect(x+20, y+15, 24, 34, true, false);
-		}
 		
-		private void drawCarW(){
-			setColor(JGColor.cyan);
-			drawRect(x+15, y+20, 34, 24, true, false);
-		}
+//		private void drawGebaeude(){
+//			setColor(JGColor.black);
+//			drawRect(x, y, tileSize, tileSize, true, false);
+//		}
+//		
+//		private void drawStrasseS(){
+//			drawGebaeude();
+//			setColor(gray);
+//			drawRect(x+12, y, 40, tileSize, true, false);
+//		}
+//		
+//		private void drawStrasseW(){
+//			drawGebaeude();
+//			setColor(gray);
+//			drawRect(x, y+12, tileSize, 40, true, false);
+//		}
+//		
+//		private void drawKreuzung(){
+//			drawGebaeude();
+//			setColor(gray);
+//			drawRect(x+12, y, 40, tileSize, true, false);
+//			drawRect(x, y+12, tileSize, 40, true, false);
+//		}
+//		
+//		private void drawCarS(){
+//			setColor(JGColor.cyan);
+//			drawRect(x+20, y+15, 24, 34, true, false);
+//		}
+//		
+//		private void drawCarW(){
+//			setColor(JGColor.cyan);
+//			drawRect(x+15, y+20, 34, 24, true, false);
+//		}
 		
 
 	} /* end class MyObject */

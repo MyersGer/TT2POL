@@ -33,11 +33,11 @@ class WorldDescription {
     }
     
     
-    public int getMapSizeX(){
+    public int getMapSizeY(){
     	return numRows;
     }
     
-    public int getMapSizeY(){
+    public int getMapSizeX(){
     	return numCols;
     }
 
