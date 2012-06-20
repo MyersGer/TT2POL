@@ -211,8 +211,9 @@ class WorldDescription implements IWorld {
     }
 
     public void updatePosition(int theAction) {
+    
     	try {
-			Thread.sleep(0);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
