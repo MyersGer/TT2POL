@@ -107,7 +107,7 @@ class WorldDescription {
     public double getReward() {
     	 num_steps++;
     	 if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_OBSTACLE) {
-             return -100.0f;
+             return -5.0f;
          }
     	 
     	double reward = 0;//rewardDistanceToGhost();
