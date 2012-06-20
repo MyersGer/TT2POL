@@ -46,8 +46,8 @@ class WorldDescription implements IWorld {
 
     public int getNumStates() {  
       /**
-       * da alle Kombinationen von Feldern mit Pille und ohne theoretisch möglich sind
-       * vergrößert sich der Zustandsraum mit der Fakultät der Positions-Zustände
+       * da alle Kombinationen von Feldern mit Pille und ohne theoretisch mï¿½glich sind
+       * vergrï¿½ï¿½ert sich der Zustandsraum mit der Fakultï¿½t der Positions-Zustï¿½nde
        */
       int numState =  getPosStates();
       for (int i = 0; i < pillStates.size(); i++) {
@@ -212,7 +212,7 @@ class WorldDescription implements IWorld {
 
     public void updatePosition(int theAction) {
     	try {
-			Thread.sleep(20);
+			Thread.sleep(0);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -224,16 +224,16 @@ class WorldDescription implements IWorld {
         //System.out.println("y=" + agentRow + " x=" + agentCol);
 
         if (theAction == 0) {/*move down*/
-            newRow = agentRow - 1;
-        }
-        if (theAction == 1) { /*move up*/
             newRow = agentRow + 1;
         }
+        if (theAction == 1) { /*move up*/
+            newRow = agentRow - 1;
+        }
         if (theAction == 2) {/*move left*/
-            newCol = agentCol - 1;
+            newCol = agentCol + 1;
         }
         if (theAction == 3) {/*move right*/
-            newCol = agentCol + 1;
+            newCol = agentCol - 1;
         }
 
 
