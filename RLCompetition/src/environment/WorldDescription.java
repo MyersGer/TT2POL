@@ -6,12 +6,12 @@ import java.util.Random;
  * This class holds all of the internal state information about the environment,
  * and manages the dynamics, state update, reward calculation, etc.
  */
-class WorldDescription {
+class WorldDescription implements IWorld {
 
     private final int numRows;
     private final int numCols;
-    public int agentRow;
-    public int agentCol;
+    private int agentRow; // x
+    private int agentCol; // y
     private int[][] theMap;
     
     private int[][] originalMap;
@@ -247,7 +247,22 @@ class WorldDescription {
     	theMap = originalMap.clone();
     }
     
+    @Override
     public int getWorldTile(int x, int y){
     	return theMap[y][x];
     }
+
+
+   /* (non-Javadoc)
+ * @see environment.PacManPosition#isMitPacMan(int, int)
+ */
+@Override
+public boolean isMitPacMan(int x, int y){
+    	if(agentCol == y && agentRow == x){
+    		return true;
+    	}
+    	return false;
+    }
+    
+    
 }
