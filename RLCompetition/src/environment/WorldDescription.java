@@ -70,12 +70,14 @@ class WorldDescription implements IWorld {
      * a loop, only accepts the state if it is valid and not terminal.
      */
     public void setRandomAgentState() {
-
-        int startRow = randGen.nextInt(numRows);
-        int startCol = randGen.nextInt(numCols);
-
-        this.agentRow = startRow;
-        this.agentCol = startCol;
+    	do{
+	        int startRow = randGen.nextInt(numRows);
+	        int startCol = randGen.nextInt(numCols);
+	
+	        this.agentRow = startRow;
+	        this.agentCol = startCol;
+    	}
+        while(!this.isValid(this.agentRow, this.agentCol));
     }
     
     /**
