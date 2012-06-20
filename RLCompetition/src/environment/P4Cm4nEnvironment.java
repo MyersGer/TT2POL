@@ -12,7 +12,7 @@ import org.rlcommunity.rlglue.codec.taskspec.ranges.IntRange;
 import org.rlcommunity.rlglue.codec.taskspec.ranges.DoubleRange;
 
 
-public class PacmanEnvironment implements EnvironmentInterface {
+public class P4Cm4nEnvironment implements EnvironmentInterface {
 
     static final int WORLD_FREE = 0;
     static final int WORLD_OBSTACLE = 1;
@@ -31,7 +31,7 @@ public class PacmanEnvironment implements EnvironmentInterface {
     
     
     
-    public PacmanEnvironment() {
+    public P4Cm4nEnvironment() {
 		super();
 		init_map();
 	}
@@ -160,7 +160,7 @@ public class PacmanEnvironment implements EnvironmentInterface {
         }
 		
 		if(message.startsWith("team name")) {
-			return "Fantastic Seven";
+			return "P4Cm4n";
 		}
 		
 		if(message.startsWith("team members")) {
@@ -175,7 +175,7 @@ public class PacmanEnvironment implements EnvironmentInterface {
      * @param args
      */
     public static void main(String[] args) {
-        EnvironmentLoader theLoader = new EnvironmentLoader(new PacmanEnvironment());
+        EnvironmentLoader theLoader = new EnvironmentLoader(new P4Cm4nEnvironment());
         theLoader.run();
     }
 

@@ -202,7 +202,7 @@ public class P4Cm4nAgent implements AgentInterface {
             return "P4Cm4n";
         }
         if (message.equals("team members")) {
-            return "Steffen Brauer, Andre Harms, Florian Johannßen, Jan-Christoph Meier, Florian Ocker, Olaf Potratz, Torben Woggan";
+            return "Steffen Brauer,André Harms,Florian Johannßen,Jan-Christoph Meier,Florian Ocker,Olaf Potratz,Torben Woggan";
         }
         if (message.equals("training start")) {
             exploringFrozen = false;

@@ -25,7 +25,7 @@ package experiment;
  */
 
 import environment.Gui;
-import environment.PacmanEnvironment;
+import environment.P4Cm4nEnvironment;
 import agent.P4Cm4nAgent;
 import agent.SampleSarsaAgent;
 
@@ -56,7 +56,7 @@ public class RunMinesSarsaExperiment{
 		//Create an environmentloader that will start the environment when its run method is called
 //		EnvironmentLoader theEnvironmentLoader=new EnvironmentLoader(new PacmanEnvironment());
 		
-		PacmanEnvironment pe = new PacmanEnvironment();
+		P4Cm4nEnvironment pe = new P4Cm4nEnvironment();
 		EnvironmentLoader theEnvironmentLoader = new EnvironmentLoader(pe);
 		new Gui(pe);
 //		theEnvironmentLoader.run();
