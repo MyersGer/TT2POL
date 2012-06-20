@@ -222,14 +222,14 @@ public class Gui extends JGEngine {
 			setColor(JGColor.black);
 			drawRect(x, y, tileSize, tileSize, true, false);
 			setColor(JGColor.red);
-			drawOval(x, y, tileSize / 4, tileSize / 4, true, true);
+			drawOval(x + tileSize/ 2, y+ tileSize / 2, tileSize / 4, tileSize / 4, true, true);
 		}
 		
 		private void drawFeldMitPowerPill(){
 			setColor(JGColor.black);
-			drawRect(x, y, tileSize, tileSize, true, false);
-			setColor(JGColor.red);
-			drawOval(x, y, tileSize / 3, tileSize / 3, true, true);
+			drawRect(x,y, tileSize, tileSize, true, false);
+			setColor(JGColor.orange);
+			drawOval(x + tileSize/ 2, y+ tileSize / 2, tileSize / 3, tileSize / 3, true, true);
 		}
 		
 		private void drawPacMan(){
