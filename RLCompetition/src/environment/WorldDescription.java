@@ -8,7 +8,8 @@ import java.util.Random;
  * and manages the dynamics, state update, reward calculation, etc.
  */
 class WorldDescription implements IWorld {
-  private final int NO_PILL = -1;
+
+	private final int NO_PILL = -1;
 
     private final int numRows;
     private final int numCols;
@@ -21,34 +22,30 @@ class WorldDescription implements IWorld {
 
     private int num_steps = 0;
     
-
     private ArrayList<Integer> pillStates;
+
+    
     
     public WorldDescription(int[][] worldMap) {
-      this.numRows = worldMap.length;
-      this.numCols = worldMap[0].length;
-      this.originalMap = worldMap;
-      resetWorld();
+        this.theMap = new int[worldMap.length][worldMap[0].length];
+        
+        
+    	for(int y=0; y<theMap.length; y++){
+    		for(int x=0; x<theMap[y].length; x++){
+    			theMap[y][x] = worldMap[y][x];
+    		}
+    	}
+        
+        
+        this.originalMap = worldMap;
+        this.numRows = theMap.length;
+        this.numCols = theMap[0].length;
+        
+        this.resetWorld();
     }
 
-    /**
-     * identifiziert wie viele verschiedene Positionen ein Objekt auf der Karte einnehmen kann
-     * @return
-     */
-    private int getPosStates() {
-      return numRows * numCols;
-    }
-    
     public int getNumStates() {
-      /**
-       * da alle Kombinationen von Feldern mit Pille und ohne theoretisch möglich sind
-       * vergrößert sich der Zustandsraum mit der Fakultät der Positions-Zustände
-       */
-      int numState =  getPosStates();
-      for (int i = 0; i < pillStates.size(); i++) {
-        numState += getPosStates() * (i + 1);
-      }
-      return numState; 
+        return numRows * numCols;
     }
     
     
@@ -72,7 +69,16 @@ class WorldDescription implements IWorld {
         this.agentRow = startRow;
         this.agentCol = startCol;
     }
+    
+    /**
+     * identifiziert wie viele verschiedene Positionen ein Objekt auf der Karte einnehmen kann
+     * @return
+     */
+    private int getPosStates() {
+      return numRows * numCols;
+    }
 
+    
     /**
      * Convert the row/col state into a single number.
      * @return
@@ -81,10 +87,10 @@ class WorldDescription implements IWorld {
       int state = 0;
       state = getPositionIdentifier(agentCol, agentRow);
       for (int i = 0; i < pillStates.size(); i++) {
-        // jeder Pillenzustand kann als eine Ebene betrachtet werden, die hierarchisch über/unter den anderen liegt
-        // zur Vermeidung doppelter Zustände wird dieser abhängig von seinem Index dem gloabeln Zustand hinzugefügt
+        // jeder Pillenzustand kann als eine Ebene betrachtet werden, die hierarchisch ï¿½ber/unter den anderen liegt
+        // zur Vermeidung doppelter Zustï¿½nde wird dieser abhï¿½ngig von seinem Index dem gloabeln Zustand hinzugefï¿½gt
         if(!pillStates.get(i).equals(NO_PILL)) {
-          state += getPosStates() * (i + 1); // +1 da der nullte Zustand für den Agenten reserviert ist
+          state += getPosStates() * (i + 1); // +1 da der nullte Zustand fï¿½r den Agenten reserviert ist
         }
       }
       return state;
@@ -97,7 +103,8 @@ class WorldDescription implements IWorld {
     private int getPositionIdentifier(int col, int row) {
       return col * numRows + row;
     }
-    
+
+
     /**
      * Sets the agent current state to startRow,startCol.
      * @param startRow
@@ -231,11 +238,15 @@ class WorldDescription implements IWorld {
             		theMap[newRow][newCol] == P4Cm4nEnvironment.WORLD_POWERPILL) {
             	
             	theMap[newRow][newCol] = P4Cm4nEnvironment.WORLD_FREE;
+            	
+
+
             	   // passe die pill states an.
-                // dabei darf weder die Reihenfolge, noch die Größe der Liste verändert werden (Eindeutigkeit der Zustände!)
+                // dabei darf weder die Reihenfolge, noch die Grï¿½ï¿½e der Liste verï¿½ndert werden (Eindeutigkeit der Zustï¿½nde!)
                 // ersetze pill position durch marker wert
                 int indexOfPill = pillStates.indexOf(getPositionIdentifier(newCol, newRow));
                 pillStates.set(indexOfPill, NO_PILL);
+
             }
             
         }
@@ -290,13 +301,13 @@ class WorldDescription implements IWorld {
     /** Die Map muss nach jeder Episode neu initialisiert werden,
      *  da der Junky die ganzen Pillen aufgefressen hat.
      */
-    public void resetWorld() { 
-      this.theMap = new int[originalMap.length][originalMap[0].length];
-      for(int y=0; y<theMap.length; y++){
-        for(int x=0; x<theMap[y].length; x++){
-            theMap[y][x] = originalMap[y][x];
-        }
-      }
+    public void resetWorld() {
+    	for(int y=0; y<theMap.length; y++){
+    		for(int x=0; x<theMap[y].length; x++){
+    			theMap[y][x] = this.originalMap[y][x];
+    		}
+    	}
+
 
       // initialisiere pill states
       pillStates = new ArrayList<Integer>();
@@ -308,6 +319,7 @@ class WorldDescription implements IWorld {
             }
         }
       }
+
     }
     
     @Override
