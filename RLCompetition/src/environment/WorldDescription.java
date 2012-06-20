@@ -297,6 +297,17 @@ class WorldDescription implements IWorld {
             theMap[y][x] = originalMap[y][x];
         }
       }
+
+      // initialisiere pill states
+      pillStates = new ArrayList<Integer>();
+      for(int y=0; y<theMap.length; y++){
+        for(int x=0; x<theMap[y].length; x++){
+            if(theMap[y][x] == P4Cm4nEnvironment.WORLD_PILL || theMap[y][x] == P4Cm4nEnvironment.WORLD_POWERPILL){
+              // jedes Feld, das eine Pille beinhaltet, wird gespeichert
+              pillStates.add(getPositionIdentifier(x, y));
+            }
+        }
+      }
     }
     
     @Override
