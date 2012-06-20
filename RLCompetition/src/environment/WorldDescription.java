@@ -93,6 +93,7 @@ class WorldDescription implements IWorld {
     public boolean isTerminal() {
     	//if(num_steps > 500) return true;
     	if(getPillCount() <= 0){
+    		System.out.println("TERMINAL TRUE");
             return true;
         }
         return false;
@@ -160,7 +161,7 @@ class WorldDescription implements IWorld {
 
     public void updatePosition(int theAction) {
     	/*try {
-			Thread.sleep(50);
+			Thread.sleep(25);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -250,7 +251,12 @@ class WorldDescription implements IWorld {
      *  da der Junky die ganzen Pillen aufgefressen hat.
      */
     public void resetWorld() {
-    	theMap = originalMap.clone();
+    	System.out.println("Reset World");
+    	for(int y=0; y<theMap.length; y++){
+    		for(int x=0; x<theMap[y].length; x++){
+    			theMap[y][x] = this.originalMap[y][x];
+    		}
+    	}
     }
     
     @Override
