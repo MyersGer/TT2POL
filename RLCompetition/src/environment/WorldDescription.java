@@ -22,8 +22,17 @@ class WorldDescription implements IWorld {
     
     
     public WorldDescription(int[][] worldMap) {
-        this.theMap = worldMap;
-        this.originalMap = worldMap.clone();
+        this.theMap = new int[worldMap.length][worldMap[0].length];
+        
+        
+    	for(int y=0; y<theMap.length; y++){
+    		for(int x=0; x<theMap[y].length; x++){
+    			theMap[y][x] = worldMap[y][x];
+    		}
+    	}
+        
+        
+        this.originalMap = worldMap;
         this.numRows = theMap.length;
         this.numCols = theMap[0].length;
     }
@@ -91,9 +100,9 @@ class WorldDescription implements IWorld {
     }
 
     public boolean isTerminal() {
+    	
     	//if(num_steps > 500) return true;
     	if(getPillCount() <= 0){
-    		System.out.println("TERMINAL TRUE");
             return true;
         }
         return false;
@@ -160,12 +169,12 @@ class WorldDescription implements IWorld {
     }
 
     public void updatePosition(int theAction) {
-    	/*try {
-			Thread.sleep(25);
+    	try {
+			Thread.sleep(20);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
         /* When the move would result in hitting an obstacles, the agent simply doesn't move */
         int newRow = agentRow;
         int newCol = agentCol;
@@ -251,7 +260,6 @@ class WorldDescription implements IWorld {
      *  da der Junky die ganzen Pillen aufgefressen hat.
      */
     public void resetWorld() {
-    	System.out.println("Reset World");
     	for(int y=0; y<theMap.length; y++){
     		for(int x=0; x<theMap[y].length; x++){
     			theMap[y][x] = this.originalMap[y][x];
