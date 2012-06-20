@@ -180,7 +180,7 @@ Weiterhin gibt es noch einen $\alpha$-Wert, welcher angibt, wie nah der Folgewer
 
 \subsection{Gierige Wahl von Aktionen}
 Eine Strategie heißt gierieg (greedy), wenn sie immer versucht die Aktion zu wählen, die zu einer optimalen Wertefunktion führt. Daraus resultiert das Problem, dass manche Aktionen nicht ausgeführt werden, obwohl die Erfahrung langfristig zeigen würde, dass sie eigentlich besser wären. 
-Es ist natürlich nicht sinnvoll einen Agenten zufällig agieren zu lassen und ihn nicht auf seine Erfahrungen zurückgreifen zu lassen. Deshalb wird der Parameter $\varepsilon$ eingeführt, welcher angibt, wie häufig nicht optimale Aktionen ausgewählt werden. Für $\varepsilon = 0$ ist die Strategie gierig, sonst nennt man sie $\varepsilon$-gierig. Meist wird ein konstanter, kleiner $\varepsilon$-Wert gewählt. 
+Es ist natürlich nicht sinnvoll einen Agenten zufällig agieren zu lassen und ihn nicht auf seine Erfahrungen zurückgreifen zu lassen. Deshalb wird der Parameter $\epsilon$ eingeführt, welcher angibt, wie häufig nicht optimale Aktionen ausgewählt werden. Für $\epsilon = 0$ ist die Strategie gierig, sonst nennt man sie $\epsilon$-gierig. Meist wird ein konstanter, kleiner $\epsilon$-Wert gewählt. 
 
 \subsection{On-Policy TD und Off-Policy TD}
 On-Policy und Off-Policy TD sind Strategiverbesserungsverfahren, die TD-Learning einsetzen(sic!).
@@ -198,36 +198,11 @@ Die Formel ändert sich hier nur im letzten Teil:
 Q(s_t,a_t) \leftarrow Q(s_t,a_t) + \alpha[r_{t+1}+\gamma  \max_\alpha Q(s_{t+1},a)- Q(s_t,a_t)]
 \end{equation}
 
-\begin{figure}[htc]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Grafiken/ql.png}
-    \caption{Pseudocode Q-Learning}
-    \label{fig:qlearning}
-\end{figure}
-
-\begin{figure}[htc]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Grafiken/sarsa.png}
-    \caption{Pseudocode Sarsa}
-    \label{fig:sarsa}
-\end{figure}
-
-Die Algorithmen für Sarsa und Q-Learning sind in Abbildung \ref{fig:sarsa} und \ref{fig:qlearning} zu sehen \cite{krl}.
-
-Um den Unterschied zwischen dem On-Policy und Off-Policy Verfahren zu verdeutlichen, führt Sutton und Barto \cite{rli} das Beipsiel einer Cliff-Anwendung (Abbildung \ref{fig:cliff}) an. Hier soll ein Weg von S zu G zurückgelegt werden. Alle Felder haben die Belohnung $-1$, bis auf das Cliff, hier ist der Wert $-100$. Da Q-Learning immer die optimale Aktion wählt, wählt ein Agent mit diesem Verfahren einen Weg direkt am Cliff entlang. Er stürtzt durch den $\varepsilon$-Wert nur selten ab. Beim Sarsa Verfahren bedingt die Aktionsauswahl den Weg. Hierzu kommt es zu häufigeren Abstürzen und der Agent wählt den sichersten Weg. Würde das $\varepsilon$ kleiner werden, würden beide Verfahren den optimalen Weg wählen.
-
-\begin{figure}[htc]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Grafiken/cliff.png}
-    \caption{Cliff-Anwendung \cite{rli}}
-    \label{fig:cliff}
-\end{figure}
 
 \section{Fazit}
-Das Szenario des Krabbelroboter fordert vom eingesetzten Verfahren eine kontinuierliche Arbeitsweise und nicht vollständiges Wissen über die Umwelt. Durch die Anforderung des nicht vollständigen Wissens scheidet die Dynamische Programmierung aus. Die Monte Carlo Methode wartet bis zum Ende einer Episode um Informationen über die Belohnung zu erhalten, dies widerspricht der Anforderung der Kontinuität. Temproal Difference Learning bietet beide Eigenschaften. Hier ist die Off-Policy Variante mit einem hohen $\epsilon$ zu wählen, um auf eventuell Auftretende Hindernisse zu reagieren.
-
-\bibliographystyle{dinat}
-\bibliography{bericht}
+- kontinurlierlich
+- dynamische Programmierung fällt weg, da hierfür Wissen über die ganze Welt notwendig ist.
+- TDL braucht kein Wissen. Funktion wird immer verbessert.
 
 \end{document}
 
