@@ -18,7 +18,7 @@ public class Gui extends JGEngine {
 	int screenY = 480;
 
 	public static void main(String[] args) {
-		PacmanEnvironment pe = new PacmanEnvironment();
+		P4Cm4nEnvironment pe = new P4Cm4nEnvironment();
 		EnvironmentLoader theLoader = new EnvironmentLoader(pe);
 		new Gui(pe);
 		theLoader.run();
@@ -29,7 +29,7 @@ public class Gui extends JGEngine {
 		initEngineApplet();
 	}
 
-	public Gui(PacmanEnvironment pe) {
+	public Gui(P4Cm4nEnvironment pe) {
 		this.world = pe.getTheWorld();
 		// This inits the engine as an application.
 		initEngine(screenX, screenY);
@@ -122,19 +122,19 @@ public class Gui extends JGEngine {
 
 			switch (world.getWorldTile(tx, ty)) {
 
-			case PacmanEnvironment.WORLD_FREE:
+			case P4Cm4nEnvironment.WORLD_FREE:
 				drawFeld();
 				break;
-			case PacmanEnvironment.WORLD_OBSTACLE:
+			case P4Cm4nEnvironment.WORLD_OBSTACLE:
 				drawWand();
 				break;
-			case PacmanEnvironment.WORLD_PILL:
+			case P4Cm4nEnvironment.WORLD_PILL:
 				drawFeldMitPill();
 				break;
-			case PacmanEnvironment.WORLD_POWERPILL:
+			case P4Cm4nEnvironment.WORLD_POWERPILL:
 				drawFeldMitPowerPill();
 				break;
-			case PacmanEnvironment.WORLD_GHOST:
+			case P4Cm4nEnvironment.WORLD_GHOST:
 				break;
 
 			default:

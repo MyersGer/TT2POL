@@ -83,7 +83,7 @@ class WorldDescription implements IWorld {
     	//über alle Felder iterieren
     	for(int y=0; y<theMap.length; y++){
     		for(int x=0; x<theMap[y].length; x++){
-    			if(theMap[y][x] == PacmanEnvironment.WORLD_PILL || theMap[y][x] == PacmanEnvironment.WORLD_POWERPILL)
+    			if(theMap[y][x] == P4Cm4nEnvironment.WORLD_PILL || theMap[y][x] == P4Cm4nEnvironment.WORLD_POWERPILL)
     				pillCount++; //Pillen zählen
     		}
     	}
@@ -101,7 +101,7 @@ class WorldDescription implements IWorld {
     private boolean isValid(int row, int col) {
         boolean valid = false;
         if (row < numRows && row >= 0 && col < numCols && col >= 0) {
-            if (theMap[row][col] != PacmanEnvironment.WORLD_OBSTACLE) {
+            if (theMap[row][col] != P4Cm4nEnvironment.WORLD_OBSTACLE) {
                 valid = true;
             }
         }
@@ -114,21 +114,21 @@ class WorldDescription implements IWorld {
      */
     public double getReward() {
     	 num_steps++;
-    	 if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_OBSTACLE) {
+    	 if (theMap[agentRow][agentCol] == P4Cm4nEnvironment.WORLD_OBSTACLE) {
              return -100.0f;
          }
     	 
     	double reward = 0;//rewardDistanceToGhost();
     	
-        if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_PILL) {
+        if (theMap[agentRow][agentCol] == P4Cm4nEnvironment.WORLD_PILL) {
             return reward + 10.0f;
         }
         
-        if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_POWERPILL) {  
+        if (theMap[agentRow][agentCol] == P4Cm4nEnvironment.WORLD_POWERPILL) {  
         	return reward + 20.0f;
         }
         
-        if (theMap[agentRow][agentCol] == PacmanEnvironment.WORLD_FREE) {
+        if (theMap[agentRow][agentCol] == P4Cm4nEnvironment.WORLD_FREE) {
         	return reward - 1f;
         }
         
@@ -146,7 +146,7 @@ class WorldDescription implements IWorld {
     	int ghostY = 0;
     	for(int x = 0; x<numCols; x++) { 
     		for(int y=0; y<numRows; y++) {
-    			if(theMap[y][x] == PacmanEnvironment.WORLD_GHOST) { 
+    			if(theMap[y][x] == P4Cm4nEnvironment.WORLD_GHOST) { 
     				ghostX = x;
     				ghostY = y;
     			}
@@ -190,10 +190,10 @@ class WorldDescription implements IWorld {
             agentRow = newRow;
             agentCol = newCol;
             
-            if(theMap[newRow][newCol] == PacmanEnvironment.WORLD_PILL || 
-            		theMap[newRow][newCol] == PacmanEnvironment.WORLD_POWERPILL) {
+            if(theMap[newRow][newCol] == P4Cm4nEnvironment.WORLD_PILL || 
+            		theMap[newRow][newCol] == P4Cm4nEnvironment.WORLD_POWERPILL) {
             	
-            	theMap[newRow][newCol] = PacmanEnvironment.WORLD_FREE;
+            	theMap[newRow][newCol] = P4Cm4nEnvironment.WORLD_FREE;
             	
             }
             
@@ -228,16 +228,16 @@ class WorldDescription implements IWorld {
                     /*if (this.getPillCount() <= 0) {
                         System.out.printf("G ");
                     }*/
-                    if (theMap[row][col] == PacmanEnvironment.WORLD_PILL) {
+                    if (theMap[row][col] == P4Cm4nEnvironment.WORLD_PILL) {
                         System.out.printf("P");
                     }
-                    if (theMap[row][col] == PacmanEnvironment.WORLD_POWERPILL) {
+                    if (theMap[row][col] == P4Cm4nEnvironment.WORLD_POWERPILL) {
                         System.out.printf("PWP ");
                     }
-                    if (theMap[row][col] == PacmanEnvironment.WORLD_OBSTACLE) {
+                    if (theMap[row][col] == P4Cm4nEnvironment.WORLD_OBSTACLE) {
                         System.out.printf("* ");
                     }
-                    if (theMap[row][col] == PacmanEnvironment.WORLD_FREE) {
+                    if (theMap[row][col] == P4Cm4nEnvironment.WORLD_FREE) {
                         System.out.printf("  ");
                     }
                 }
