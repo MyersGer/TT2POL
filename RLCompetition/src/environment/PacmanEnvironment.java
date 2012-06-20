@@ -27,53 +27,37 @@ public class PacmanEnvironment implements EnvironmentInterface {
     boolean fixedStartState = false;
     int startRow = 0;
     int startCol = 0;
+    
+    
+    
+    
+    public PacmanEnvironment() {
+		super();
+		init_map();
+	}
+
+	private void init_map(){
+        int world_map[][] = new int[][]{
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 3, 1},
+                {1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
+                {1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
+                {1, 2, 1, 1, 1, 1, 2, 2, 2, 0, 2, 2, 2, 1, 1, 1, 2, 1},
+                {1, 2, 2, 2, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
+                {1, 1, 2, 1, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
+                {1, 1, 3, 1, 2, 2, 2, 1, 0, 4, 0, 1, 2, 2, 2, 2, 3, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+            };
+
+            theWorld = new WorldDescription(world_map);
+    }
 
     public String env_init() {
         //This is hard coded, but there is no reason it couldn't be automatically
         //generated or read from a file.
-        int world_map[][] = new int[][]{
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 3, 1},
-            {1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1},
-            {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-            {1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-            {1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
-            {1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
-            {1, 2, 1, 1, 1, 1, 2, 2, 2, 0, 2, 2, 2, 1, 1, 1, 2, 1},
-            {1, 2, 2, 2, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
-            {1, 1, 2, 1, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
-            {1, 1, 3, 1, 2, 2, 2, 1, 0, 4, 0, 1, 2, 2, 2, 2, 3, 1},
-            {1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1},
-            
-            {1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1},
-            {1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 3, 1},
-            {1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1},
-            {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-            {1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-            {1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
-            {1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
-            {1, 2, 1, 1, 1, 1, 2, 2, 2, 0, 2, 2, 2, 1, 1, 1, 2, 1},
-            {1, 2, 2, 2, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
-            {1, 1, 2, 1, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
-            {1, 1, 3, 1, 2, 2, 2, 1, 0, 4, 0, 1, 2, 2, 2, 2, 3, 1},
-            {1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1},
-            
-            {1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1},
-            {1, 3, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 3, 1},
-            {1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1},
-            {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-            {1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-            {1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
-            {1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1},
-            {1, 2, 1, 1, 1, 1, 2, 2, 2, 0, 2, 2, 2, 1, 1, 1, 2, 1},
-            {1, 2, 2, 2, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
-            {1, 1, 2, 1, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 1, 2, 1},
-            {1, 1, 3, 1, 2, 2, 2, 1, 0, 4, 0, 1, 2, 2, 2, 2, 3, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        };
-
-        theWorld = new WorldDescription(world_map);
-
         //Create a task spec programmatically.  This task spec encodes that state, action, and reward space for the problem.
         //You could forgo the task spec if your agent and environment have been created specifically to work with each other
         //ie, there is no need to share this information at run time.  You could also use your own ad-hoc task specification language,
@@ -87,7 +71,8 @@ public class PacmanEnvironment implements EnvironmentInterface {
         //Specify that there will be an integer action [0,3]
         theTaskSpecObject.addDiscreteAction(new IntRange(0, 3));
         //Specify the reward range [-100,10]
-        theTaskSpecObject.setRewardRange(new DoubleRange(-100.0d, 10.0d + (world_map.length * world_map[0].length)));
+//        theTaskSpecObject.setRewardRange(new DoubleRange(-100.0d, 10.0d + (world_map.length * world_map[0].length)));
+        theTaskSpecObject.setRewardRange(new DoubleRange(-100.0d, 10.0d + (theWorld.getMapSizeX() * theWorld.getMapSizeY())));
 
         theTaskSpecObject.setExtra("PacMan");
 
@@ -193,4 +178,10 @@ public class PacmanEnvironment implements EnvironmentInterface {
         EnvironmentLoader theLoader = new EnvironmentLoader(new PacmanEnvironment());
         theLoader.run();
     }
+
+	public WorldDescription getTheWorld() {
+		return theWorld;
+	}
+    
+
 }

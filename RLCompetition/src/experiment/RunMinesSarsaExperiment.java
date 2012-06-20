@@ -24,6 +24,7 @@ package experiment;
  * 
  */
 
+import environment.Gui;
 import environment.PacmanEnvironment;
 import agent.P4Cm4nAgent;
 import agent.SampleSarsaAgent;
@@ -53,7 +54,12 @@ public class RunMinesSarsaExperiment{
 		//AgentLoader theAgentLoader=new AgentLoader(new SampleSarsaAgent());
 		AgentLoader theAgentLoader=new AgentLoader(new P4Cm4nAgent());
 		//Create an environmentloader that will start the environment when its run method is called
-		EnvironmentLoader theEnvironmentLoader=new EnvironmentLoader(new PacmanEnvironment());
+//		EnvironmentLoader theEnvironmentLoader=new EnvironmentLoader(new PacmanEnvironment());
+		
+		PacmanEnvironment pe = new PacmanEnvironment();
+		EnvironmentLoader theEnvironmentLoader = new EnvironmentLoader(pe);
+		new Gui(pe);
+//		theEnvironmentLoader.run();
 		
 		//Create threads so that the agent and environment can run asynchronously 		
 		Thread agentThread=new Thread(theAgentLoader);
