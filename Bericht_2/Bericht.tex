@@ -58,9 +58,9 @@
 	\listoffigures  
 %	\lstlistoflistings	
 \newpage
-\section{Frage}
+\section{Frage 1}
 
-\section{Frage}
+\section{Frage 2}
 Warum nähert sicher das vom On-Policy-Verfahren SARSA erzeugte Verhalten dem des Off-Policy-Verfahrens Q-Learning bei kleinem Epsilon an?
 
 Die Güte eines Zustands wird bei beiden Verfahren durch die Aktions-Wertfunktion Q bestimmt. Nach jedem Aktions-Schritt wird diese entsprechend der gemachten Erfahrungen angepasst. Bei der Berechnung von Q fließt bei Sarsa anteilig (in abgeschwächter Form) die Erfahrung der Folgeaktion mit ein. Es wird also ein Schritt in die Zukunft geschaut und dort eine Aktion gemäß Strategie gewählt. Der Gewinn eben dieser Folgeaktion hat also Einfluss auf die Bewertung der vorangegangenen Aktion, welche in diesen Zustand führen wird. 
@@ -72,7 +72,7 @@ Q-Learning benutzt das Off-Policy-Verfahren, was bedeutet, dass für die Auswahl
 
 Wird nun ein sehr kleines Epsilon gewählt, so wird auch seltener Exploriert. Dadurch ist die Folgeaktion auch häufiger die beste wählbare Aktion (gemäß ihres Erwartungswerts). Der Unterschied in den Bewertungsverfahren wird dementsprechend geringer und die beiden Verfahren nähern sich in ihrem Verhalten an.
 
-\section{Frage}
+\section{Frage 3}
 Wie geht man vor, wenn die Zustandsvariablen, die einen Zustand beschreiben kontinuierlich sind? Wie geht man vor, wenn der Zustandsraum so groß ist, dass der Speicher nicht reicht, um alle V-Werte vzw. Q-Werte abzuspeichern.
 
 Ist die tabellarische Verwaltung der Zustandswerte nicht möglich, da es zuviele Zustände gibt oder sie kontinuierlich sind, müssen sie generalisiert werden. Zusätzlich muss die V- oder Q-Funktion approximiert werden.
@@ -80,8 +80,10 @@ Ist die tabellarische Verwaltung der Zustandswerte nicht möglich, da es zuviele
 
 
 
-\section{Frage}
-
+\section{Frage 4}
+Da bei Kniffel nicht die letzten Zustände sondern alle Aktionen entscheidend für eine Bewertung des Spiels sind, benötigt man ein Verfahren, das alle Status-Kombinationen bewertet. Hier bietet sich Monte-Carlo an. Q-Learning würde nur die unmittelbare Belohnung einer Status-Aktions-Kombination berücksichtigen.
+Monte-Carlo hingegen speichert alle Status-Kombinationen, die durchlaufen
+werden. Sobald ein Status eine Belohnung gibt, wird diese Belohnung auf alle gesammelten Status-Actions-Kombinationen übertragen. Die Übertragung findet hierbei nicht eins zu eins statt, sondern bildet das Mittel über alle Q-Werte, die bereits vorher ermittelt wurden.
 
 \end{document}
 

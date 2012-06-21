@@ -74,12 +74,14 @@ class WorldDescription implements IWorld {
      * a loop, only accepts the state if it is valid and not terminal.
      */
     public void setRandomAgentState() {
-
-        int startRow = randGen.nextInt(numRows);
-        int startCol = randGen.nextInt(numCols);
-
-        this.agentRow = startRow;
-        this.agentCol = startCol;
+    	do{
+	        int startRow = randGen.nextInt(numRows);
+	        int startCol = randGen.nextInt(numCols);
+	
+	        this.agentRow = startRow;
+	        this.agentCol = startCol;
+    	}
+        while(!this.isValid(this.agentRow, this.agentCol));
     }
     
     /**
@@ -215,8 +217,9 @@ class WorldDescription implements IWorld {
     }
 
     public void updatePosition(int theAction) {
+    
     	try {
-			Thread.sleep(0);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
