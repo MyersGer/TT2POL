@@ -167,6 +167,11 @@ public class P4Cm4nEnvironment implements EnvironmentInterface {
 			return "Steffen Brauer,André Harms,Florian Johannßen,Jan-Christoph Meier,Florian Ocker,Olaf Potratz,Torben Woggan";			
 		}
 		
+		if(message.startsWith("training end")){
+			new Gui(this);
+			return "Message understood.  Start Gui.";
+		}
+		
         return "PacMan does not understand your message.";
     }
 
