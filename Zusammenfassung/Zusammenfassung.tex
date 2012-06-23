@@ -1,0 +1,134 @@
+\documentclass[10pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage[ngerman]{babel}
+\usepackage[automark]{scrpage2}
+\usepackage{amsmath,amssymb,amstext}
+%\usepackage{mathtools}
+\usepackage[]{color}
+\usepackage[]{enumerate}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage[perpage,para,symbol*]{footmisc}
+\usepackage{listings} 
+\usepackage[pdfborder={0 0 0},colorlinks=false]{hyperref}
+\usepackage[numbers,square]{natbib}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage[absolute]{textpos}
+\usepackage{float}
+%\usepackage[colorinlistoftodos,textsize=small,textwidth=2cm,shadow,bordercolor=black,backgroundcolor={red!100!green!33},linecolor=black]{todonotes}
+
+\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, breaklines=true, showstringspaces=false} 
+\restylefloat{figure}
+
+%changehere
+\def\titletext{Bericht TT2P 2}
+\def\titletextshort{Problem 3}
+\author{Steffen Brauer, André Harms,\\ Florian Johannßen, Jan-Christoph Meier,\\ Florian Ocker, Olaf Potratz,\\ Torben Woggan}
+
+\title{\titletext}
+
+%changehere Datum der Übung
+\date{10.06.2012}
+
+\pagestyle{scrheadings}
+%changehere
+\ihead{TT2, Neitzke}
+\ifoot{Generiert am:\\ \today}
+
+\cfoot{Steffen Brauer, André Harms,\\ Florian Johannßen, Jan-Christoph Meier,\\ Florian Ocker, Olaf Potratz,\\ Torben Woggan}
+
+
+\ohead[]{\titletextshort}
+\ofoot[]{{\thepage} / \pageref{LastPage}}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+
+\begin{document}
+\maketitle
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+%	\listoftables                                 												% 
+	\listoffigures  
+%	\lstlistoflistings	
+\newpage
+\section{Begriffe}
+Aktion
+- Belohnung / Reward
+- Umgebung / Umwelt
+- Modell der Umgebung
+- nicht-deterministische Umgebung
+- stationäre Umgebung
+- Strategie
+- stochastische Strategie
+- deterministische Strategie
+- optimale Strategie
+- Return
+- Episoden / episodische Aufgaben
+- kontinuierliche Aufgaben
+- terminale / nicht-terminale Zustände
+- Discount-Rate
+- Markov-Eigenschaft, Markov-Zustände, Markov-Entscheidungsprozess
+- Übergangswahrscheinlichkeit
+- Erwartungswert für sofortige Belohnung
+- Zustand-Wert-Funktion (state-value function), V-Wert
+- optimale V-Funktion
+- Aktion-Wert-Funktion (action-value function), Q-Wert
+- optimale Q-Funktion
+- gierige Strategie (greedy policy)
+- soft policy, e-soft policy, e-greedy policy
+- Evaluation vs. Improvement
+- Strategie-Iteration (policy iteration)
+- Wert-Iteration (value iteration)
+- Generalized Policy Iteration
+- Exploring Starts
+- On-Policy vs. Off-Policy
+- Control Problem, Prediction Problem
+- Behavior Policy, Estimation Policy
+- Lernrate
+- Exploration vs. Exploitation
+- Eligibility
+- Trace Decay Faktor
+
+\section{Lernziele}
+V1: Wechselspiel zwischen Agent und Umwelt erläutern können
+V2: Merkmale der Bellman-Gleichungen erläutern können
+V3: Eigenschaften der Verfahren aus dem Bereich Dynamic Programming erläutern
+können
+V4: Verfahren Policy Evaluation, Policy Iteration und Value Iteration erklären können und
+die Algorithmen in ihren Grundzügen erläutern können
+V5: Modell der Generalized Policy Iteration erläutern können
+V6: Merkmale der Monte Carlo Methoden erläutern können, das Wesen der Verfahren
+erklären können, Unterschiede zu DP und TD erläutern können
+V7: Verfahren zur Strategie-Bewertung (First-Visit) und Strategie-Verbesserung (Monte
+Carlo ES, On-Policy Monte Carlo Control, Off-Policy Monte Carlo Control) in ihren
+Grundzügen erläutern und vergleichen können
+V8: TD mit MC und DP vergleichen können
+V9: Algorithmus TD(0) zur Strategie-Bewertung erläutern können
+V10: Algorithmen SARSA und Q-Learning zur Strategie-Verbesserung erläutern können,
+auch die Unterschiede, die sich für Anwendungen ergeben, im Detail beherrschen
+V11: n-Step TD Predictions und TD(l) Prediction in ihrer Bedeutung erläutern können
+V12: Eligibility Traces in ihren verschiedenen Ausprägungen mit ihren Vor- und Nachteilen
+erklären können.
+V13: Algorithmen TD(l) und Sarsa(l) erläutern können.
+V14: Grundidee und Problematik des Q(l)-Algorithmus erläutern können
+
+\section{Anwendungsaufgaben}
+A1: Verfahren Policy Evaluation, Policy Iteration und Value Iteration anwenden können,
+d.h. Berechnungen für gegebene Beispiele durchführen können
+A2: Das Verfahren zur Strategie-Bewertung „First-Visit“ und das Verfahren zur Strategie-
+Verbesserung „On-Policy Monte Carlo Control“ anwenden können, d.h. Berechnungen für
+gegebene Aufgabenstellungen durchführen können
+A3: Algorithmus TD(0) zur Strategie-Bewertung anwenden können
+A4: Algorithmen SARSA und Q-Learning zur Strategie-Verbesserung anwenden können
+
+
+
+\end{document}
+
