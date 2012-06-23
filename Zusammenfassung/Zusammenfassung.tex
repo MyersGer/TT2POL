@@ -69,11 +69,21 @@ Aktion
 - stochastische Strategie
 - deterministische Strategie
 - optimale Strategie
-- Return
-- Episoden / episodische Aufgaben
-- kontinuierliche Aufgaben
-- terminale / nicht-terminale Zustände
-- Discount-Rate
+\paragraph{Return}
+$R_t=r_{t+1}+r_{r_t+2}+...+r_T$
+Return $R_t$ ist Summe der Rewards ab Zeitpunkt t. T wäre ein abschließender Schritt.
+
+\paragraph{Episoden / episodische Aufgaben}
+Handungsabläufe des Agenten können aus Episoden bestehen, die jeweils mit einem abschließenden Schritt enden. Der Agent führt dann episodische Aufgaben durch(episodic tasks).
+
+\paragraph{kontinuierliche Aufgaben}
+Fortdauernde Aufgaben heißen kontinuierlich. Nicht-endende Aufgaben würden zu einer unendlich hohen Belohnung führen. Lösung: Discount-Rate.
+
+\paragraph{terminale / nicht-terminale Zustände}
+
+\paragraph{Discount-Rate}
+Nicht-endende Aufgaben würden zu einer unendlich hohen Belohnung führen. Lösung: Abschwächung zukünftiger Belohnungen(discounting). Discount-Rate: $0 <= \gamma <= 1$. Durch Discount-Rate ist Gesamt-Belohnung begrenzt.
+
 - Markov-Eigenschaft, Markov-Zustände, Markov-Entscheidungsprozess
 - Übergangswahrscheinlichkeit
 - Erwartungswert für sofortige Belohnung
